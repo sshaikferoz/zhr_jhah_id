@@ -2,52 +2,52 @@
     xmlns="sap.m" 
     xmlns:core="sap.ui.core">
     
-    <VBox visible="{employeeInfo>/isVisible}" width="100%" class="violatorHeaderWrapper sapUiMediumMarginBottom">
+    <VBox visible="{employeeInfo>/isVisible}" class="violatorHeaderWrapper sapUiMediumMarginBottom">
         
         <!-- MAIN STRIP: Employee Details -->
-        <HBox width="100%" class="nativeViolatorStrip" wrap="Wrap">
+        <HBox class="nativeViolatorStrip" wrap="Wrap">
             
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Name:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/FullName}" class="violatorValue" />
+                    <Text text="{employeeInfo>/UserName}" class="violatorValue" />
                 </HBox>
                 <HBox class="violatorRow" alignItems="Center">
                     <Text text="Payroll Num:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/PayrollNum}" class="violatorValue" />
+                    <Text text="{employeeInfo>/Pernr}" class="violatorValue" />
                 </HBox>
             </VBox>
             
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Department:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/Department}" class="violatorValue" />
+                    <Text text="{employeeInfo>/OrgText}" class="violatorValue" />
                 </HBox>
                 <HBox class="violatorRow" alignItems="Center">
                     <Text text="Job Title:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/JobTitle}" class="violatorValue" />
+                    <Text text="{employeeInfo>/PostionText}" class="violatorValue" />
                 </HBox>
             </VBox>
 
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Badge:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/BadgeNum}" class="violatorValue" />
+                    <Text text="{employeeInfo>/BadgeNumber}" class="violatorValue" />
                 </HBox>
                 <HBox class="violatorRow" alignItems="Center">
                     <Text text="Gov ID:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/GovtId}" class="violatorValue" />
+                    <Text text="{employeeInfo>/GovernmentID}" class="violatorValue" />
                 </HBox>
             </VBox>
             
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Phone Num:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/PhoneNum}" class="violatorValue" />
+                    <Text text="{employeeInfo>/Phone}" class="violatorValue" />
                 </HBox>
                 <HBox class="violatorRow" alignItems="Center">
                     <Text text="Email:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/EmailId}" class="violatorValue" />
+                    <Text text="{employeeInfo>/EMail}" class="violatorValue" />
                 </HBox>
             </VBox>
 
@@ -58,37 +58,10 @@
                 </HBox>
                 <HBox class="violatorRow" alignItems="Center">
                     <Text text="Unit Name:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/UnitName}" class="violatorValue" />
+                    <Text text="{employeeInfo>/UnitText}" class="violatorValue" />
                 </HBox>
             </VBox>
 
         </HBox>
-
-        <!-- THIN STRIP: ID Status Stats (You can map these to your specific backend logic) -->
-        <HBox 
-            visible="{= (${employeeInfo>/TotalActiveRequests} * 1 > 0) || (${employeeInfo>/TotalIDPrinted} * 1 > 0) }" 
-            width="100%" 
-            class="nativeViolatorStripThin" 
-            wrap="Wrap" 
-            justifyContent="SpaceBetween" 
-            alignItems="Center">
-            
-            <HBox class="violatorRowThin" alignItems="Center">
-                <Text text="Active Requests:" class="violatorLabelThin sapUiTinyMarginEnd" />
-                <Text text="{= ${employeeInfo>/TotalActiveRequests} ? ${employeeInfo>/TotalActiveRequests} : '0' }" class="{= (${employeeInfo>/TotalActiveRequests} * 1 > 0) ? 'violatorValueThin highlightStat' : 'violatorValueThin' }" />
-            </HBox>
-
-            <HBox class="violatorRowThin" alignItems="Center">
-                <Text text="Total ID Printed:" class="violatorLabelThin sapUiTinyMarginEnd" />
-                <Text text="{= ${employeeInfo>/TotalIDPrinted} ? ${employeeInfo>/TotalIDPrinted} : '0' }" class="violatorValueThin" />
-            </HBox>
-            
-            <HBox class="violatorRowThin" alignItems="Center">
-                <Text text="Last Action Date:" class="violatorLabelThin sapUiTinyMarginEnd" />
-                <Text text="{= ${employeeInfo>/LastActionDate} ? ${employeeInfo>/LastActionDate}.substring(5,7) + '/' + ${employeeInfo>/LastActionDate}.substring(8,10) + '/' + ${employeeInfo>/LastActionDate}.substring(0,4) : 'N/A' }" class="violatorValueThin" />
-            </HBox>
-
-        </HBox>
-
     </VBox>
 </core:FragmentDefinition>

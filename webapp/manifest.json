@@ -88,7 +88,12 @@
       }
     },
     "resources": {
-      "css": [ { "uri": "css/custom.css", "id": "customcss" } ]
+      "css": [
+        {
+          "uri": "css/custom.css",
+          "id": "customcss"
+        }
+      ]
     },
     "routing": {
       "config": {},
@@ -152,6 +157,17 @@
             "settings": {
               "editableHeaderContent": false,
               "contextPath": "/Header",
+              "content": {
+                "header": {
+                  "facets": {
+                    "CustomEmployeeHeader": {
+                      "type": "XMLFragment",
+                      "requestGroupId": "$auto.Workers",
+                      "name": "com.jhah.zhrjhahsecid.ext.fragment.EmployeeHeader"
+                    }
+                  }
+                }
+              },
               "navigation": {
                 "_items": {
                   "detail": {

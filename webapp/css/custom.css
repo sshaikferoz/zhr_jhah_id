@@ -1,18 +1,28 @@
 /* =========================================================
-1. EMPLOYEE MODE HIDING LOGIC
+1. EMPLOYEE & HR MODE (Hide Admin Actions)
+   - Hides Approve, Reject, No Show, Issue ID
+   - Leaves Create, Delete, Edit, and Reschedule VISIBLE
 ========================================================= */
-.zhrjhahsecid-app.employeeMode [id*="DataFieldForAction"],
-.zhrjhahsecid-app.employeeMode [id*="StandardAction::Create"],
-.zhrjhahsecid-app.employeeMode [id*="StandardAction::Delete"],
-.zhrjhahsecid-app.employeeMode [id*="StandardAction::Edit"],
-.zhrjhahsecid-app.employeeMode .violatorHeaderWrapper, 
-.zhrjhahsecid-app.employeeMode .nativeViolatorStrip,
-.zhrjhahsecid-app.employeeMode .nativeViolatorStripThin {
+.zhrjhahsecid-app.employeeMode [id*="ApproveArea"],
+.zhrjhahsecid-app.employeeMode [id*="RejectArea"],
+.zhrjhahsecid-app.employeeMode [id*="MarkNoShow"],
+.zhrjhahsecid-app.employeeMode [id*="IssueID"] {
     display: none !important;
 }
 
 /* =========================================================
-2. KPI CARDS (TOP BOXES) - HOVER ANIMATIONS & SHADOWS
+2. SECURITY MODE (Hide Employee/HR Actions)
+   - Hides Create, Delete, and Edit
+   - Leaves Approve, Reject, No Show, Issue ID, and Reschedule VISIBLE
+========================================================= */
+.zhrjhahsecid-app.securityMode [id*="StandardAction::Create"],
+.zhrjhahsecid-app.securityMode [id*="StandardAction::Delete"],
+.zhrjhahsecid-app.securityMode [id*="StandardAction::Edit"] {
+    display: none !important;
+}
+
+/* =========================================================
+3. KPI CARDS (TOP BOXES) - HOVER ANIMATIONS & SHADOWS
 ========================================================= */
 .zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem,
 .zhrjhahsecid-app [id*="::HeaderFacet::"] {
@@ -23,7 +33,7 @@
     padding: 0.75rem 1.25rem !important;
     margin-right: 0.75rem !important;
     margin-bottom: 0.5rem !important;
-    transition: all 0.2s ease-in-out !important;
+    transition: all 0.2s ease-in-out !important; 
 }
 
 .zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem:hover,
@@ -32,6 +42,7 @@
     transform: translateY(-3px) !important; 
 }
 
+/* Force KPI text to be bold */
 .zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMText,
 .zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMTitle,
 .zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMLabel,
@@ -46,17 +57,17 @@
 }
 
 /* =========================================================
-3. MAIN HEADER STRIP (COMPACTED SPACING)
+4. MAIN HEADER STRIP (COMPACTED SPACING)
 ========================================================= */
 .zhrjhahsecid-app .nativeViolatorStrip {
     flex-basis: 100%;
     width: 100%;
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 0.5rem !important; 
     background: #ffffff !important; 
     border-radius: 10px !important; 
     border: 1px solid rgba(0,0,0, 0.04) !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important; 
-    padding: 0.5rem 1rem !important;
+    padding: 0.5rem 1rem !important; 
 }
 
 .zhrjhahsecid-app .violatorCol {
@@ -68,54 +79,16 @@
     align-items: center !important;
     margin-bottom: 2px !important; 
 }
-
 .zhrjhahsecid-app .violatorLabel {
     font-size: 0.8125rem !important;
     color: #6a6d70 !important;
     line-height: normal !important;
 }
-
 .zhrjhahsecid-app .violatorValue {
     font-size: 0.8125rem !important;
     color: #32363a !important;
     font-weight: 600 !important;
     line-height: normal !important;
-}
-
-/* =========================================================
-4. NEW ULTRA-THIN STRIP (COMPACTED SPACING)
-========================================================= */
-.zhrjhahsecid-app .nativeViolatorStripThin {
-    flex-basis: 100%;
-    width: 100%;
-    background: #ffffff !important; 
-    border-radius: 8px !important; 
-    border: 1px solid rgba(0,0,0, 0.04) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important; 
-    padding: 0.25rem 1rem !important; 
-}
-
-.zhrjhahsecid-app .violatorRowThin {
-    align-items: center !important;
-    margin-bottom: 0 !important; 
-    margin-right: 1.5rem !important; 
-}
-
-.zhrjhahsecid-app .violatorLabelThin {
-    font-size: 0.75rem !important; 
-    color: #6a6d70 !important;
-    line-height: normal !important;
-}
-
-.zhrjhahsecid-app .violatorValueThin {
-    font-size: 0.8125rem !important; 
-    color: #32363a !important;
-    font-weight: 700 !important; 
-    line-height: normal !important;
-}
-
-.zhrjhahsecid-app .highlightStat {
-    color: #b02323 !important;
 }
 
 /* =========================================================
@@ -142,4 +115,50 @@ html[class*="sapUiTheme-JHAH"] [id*="::FormElement::"] .sapMdcField > * {
     text-align: left !important; 
     margin: 0 !important;
     padding: 0 !important;
+}
+
+html[class*="sapUiTheme-JHAH"] .sapUiFormCL,
+html[class*="sapUiTheme-JHAH"] .sapUiFormContainer {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+html[class*="sapUiTheme-JHAH"] .sapUiFormElement {
+    margin-left: 0 !important;
+}
+
+/* =========================================================
+6. SAFETY FIX: FORCE FOOTER BUTTONS TO BE CLICKABLE
+========================================================= */
+.sapFDynamicPageFooter, .sapMPageFooter {
+    z-index: 9999 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+}
+
+/* =========================================================
+7. CONVERT INLINE UPLOAD ARROW ICON (↑) TO "UPLOAD" TEXT
+========================================================= */
+/* Change the font family of the specific upload icon to standard text */
+.zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader .sapUiIcon,
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapUiIcon {
+    font-family: var(--sapFontFamily, "72", "Arial", sans-serif) !important;
+}
+
+/* Replace the icon character with the word "Upload" */
+.zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader .sapUiIcon::before,
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapUiIcon::before {
+    content: "Upload" !important;
+    font-size: 0.875rem !important;
+    font-weight: bold !important;
+}
+
+/* Expand the button so the text fits nicely without getting cut off */
+.zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader,
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"],
+.zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader .sapMBtnInner,
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapMBtnInner {
+    width: auto !important;
+    min-width: 4.5rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
 }

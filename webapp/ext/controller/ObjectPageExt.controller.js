@@ -23,7 +23,6 @@ sap.ui.define([
             this._sLatestRequestedId = sCleanId; 
 
             if (sCleanId !== "") {
-                // ALIGNED WITH YOUR API: /EmployeeDetails
                 var sPath = "/EmployeeDetails('" + sCleanId + "')"; 
                 var oContext = oAppModel.bindContext(sPath, null, { "$$groupId": "$direct" });
                 
@@ -60,7 +59,6 @@ sap.ui.define([
                     var oEmployeeModel = new JSONModel({ isVisible: false });
                     oView.setModel(oEmployeeModel, "employeeInfo");
                     
-                    // Bind the custom CSS app namespace class to the view & body
                     oView.addStyleClass("zhrjhahsecid-app");
                     document.body.classList.add("zhrjhahsecid-app");
 
@@ -69,7 +67,7 @@ sap.ui.define([
                             try {
                                 var $view = oView.$();
 
-                                // 1. INSTANT TYPING LISTENER FOR PAYROLL NUM 
+                                // 1. INSTANT TYPING LISTENER
                                 if (!$view.data("payrollIdEventAttached")) {
                                     var timeoutId = null; 
                                     $view.on("input.payrollIdListener", "input", function(oEvent) {
@@ -86,7 +84,6 @@ sap.ui.define([
                                                 sBindingPath = (oCurrentNode.getBindingPath("value") || "").toUpperCase();
                                             }
                                             
-                                            // Listen for the PayrollNum field
                                             if (sId.indexOf("PAYROLLNUM") !== -1 || sBindingPath.indexOf("PAYROLLNUM") !== -1) {
                                                 bIsTargetField = true; break;
                                             }
@@ -106,7 +103,6 @@ sap.ui.define([
                                                         oEmpModel.refresh(true);
                                                     }
                                                 }
-                                                // Trigger OData call 500ms after user stops typing
                                                 timeoutId = setTimeout(function() {
                                                     oExtension._fetchEmployeeDetails(sVal);
                                                 }, 500);
@@ -116,7 +112,7 @@ sap.ui.define([
                                     $view.data("payrollIdEventAttached", true);
                                 }
 
-                                // 2. DYNAMIC ASTERISK, PLACEHOLDER & MAX DATE MANAGER
+                                // 2. ASTERISKS & MESSAGES
                                 if (!$view.data("dynamicUIFeaturesAttached")) {
                                     setInterval(function() {
                                         try {
@@ -141,11 +137,9 @@ sap.ui.define([
                                                 });
                                             };
 
-                                            // ID Application Mandatory Fields dynamically marked
                                             toggleAsterisk("Payroll Number", true);
                                             toggleAsterisk("Request Type", true);
 
-                                            // Attachments Validation Messaging 
                                             $view.find(".sapMTitle span:contains('Attachments')").each(function() {
                                                 var $title = $(this);
                                                 var rawText = $title.text().split('*')[0].trim();
@@ -191,8 +185,9 @@ sap.ui.define([
                         oView.setModel(oEmployeeModel, "employeeInfo");
                     }
 
-                    // NOTE: If you have an Auth Check API for ID App, replace "/authInfo" with your actual endpoint.
-                    // If you don't use this employee hiding logic in the ID app, you can safely leave this or remove it.
+                    // ------------------------------------------------------------
+                    // ROLE-BASED AUTH CHECK (Security vs Employee/HR)
+                    // ------------------------------------------------------------
                     if (!this._bAuthChecked) {
                         this._bAuthChecked = true;
                         try {
@@ -200,16 +195,24 @@ sap.ui.define([
                             oListBinding.requestContexts(0, 1).then(function (aContexts) {
                                 if (aContexts && aContexts.length > 0) {
                                     var oUserData = aContexts[0].getObject();
-                                    if (oUserData.IsAdmin === false) {
-                                        oView.addStyleClass("employeeMode");
-                                        document.body.classList.add("employeeMode");
-                                    } else {
+                                    var sRole = (oUserData.ROLE || "").toUpperCase();
+
+                                    if (sRole === "ADMIN") {
+                                        // Security Admin Mode
+                                        oView.addStyleClass("securityMode");
+                                        document.body.classList.add("securityMode");
                                         oView.removeStyleClass("employeeMode");
                                         document.body.classList.remove("employeeMode");
+                                    } else {
+                                        // HR / Employee Mode
+                                        oView.addStyleClass("employeeMode");
+                                        document.body.classList.add("employeeMode");
+                                        oView.removeStyleClass("securityMode");
+                                        document.body.classList.remove("securityMode");
                                     }
                                 }
                             }).catch(function (err) {
-                                console.log("No Auth API configured or failed - continuing normally.");
+                                console.log("Auth fetch failed:", err);
                             });
                         } catch (e) {
                             console.log("Skipping Auth check.");
@@ -217,7 +220,6 @@ sap.ui.define([
                     }
 
                     if (oBindingContext && oBindingContext.getPath().indexOf("/Header") !== -1) {
-                        // 1. Initial Load when Page opens
                         oBindingContext.requestProperty("PayrollNum").then(function (sPayrollNum) {
                             this._fetchEmployeeDetails(sPayrollNum);
                         }.bind(this)).catch(function(err) {
@@ -227,7 +229,6 @@ sap.ui.define([
                             }
                         });
 
-                        // 2. Attach Standard Backend Model Change Listener for standard dropdown/value help selections
                         if (this._oPayrollBinding) {
                             this._oPayrollBinding.detachChange(this._onPayrollModelChanged, this);
                             this._oPayrollBinding.destroy(); 
