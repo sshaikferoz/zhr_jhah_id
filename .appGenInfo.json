@@ -1,0 +1,33 @@
+{
+  "generationParameters": {
+    "generationDate": "Thu Jul 23 2026 07:28:25 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "http://jhah.virtual.ip.dhc:443/sap/opu/odata4/sap/zsrv_hr_id_o4/srvd/sap/zsrv_hr_id_app/0001/",
+    "appName": "zhr_jhahsec_id",
+    "appTitle": "ID Management System",
+    "appDescription": "ID Management System",
+    "appNamespace": "com.jhah",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.39",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.29.0",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "header"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "_items"
+      }
+    ],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```",
+    "valueHelpDownloaded": true
+  }
+}
