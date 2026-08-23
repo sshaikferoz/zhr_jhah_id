@@ -101,26 +101,12 @@
         {
           "pattern": ":?query:",
           "name": "headerList",
-          "target": [
-            "headerList"
-          ]
+          "target": "headerList" 
         },
         {
           "pattern": "Header({key}):?query:",
           "name": "headerObjectPage",
-          "target": [
-            "headerList",
-            "headerObjectPage"
-          ]
-        },
-        {
-          "pattern": "Header({key})/_items({key2}):?query:",
-          "name": "appAreaObjectPage",
-          "target": [
-            "headerList",
-            "headerObjectPage",
-            "appAreaObjectPage"
-          ]
+          "target": "headerObjectPage" 
         }
       ],
       "targets": {
@@ -162,30 +148,20 @@
                   "facets": {
                     "CustomEmployeeHeader": {
                       "type": "XMLFragment",
-                      "requestGroupId": "$auto.Workers",
                       "name": "com.jhah.zhrjhahsecid.ext.fragment.EmployeeHeader"
                     }
                   }
                 }
               },
-              "navigation": {
-                "_items": {
-                  "detail": {
-                    "route": "appAreaObjectPage"
+              "controlConfiguration": {
+                "_items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    }
                   }
                 }
               }
-            }
-          }
-        },
-        "appAreaObjectPage": {
-          "type": "Component",
-          "id": "appAreaObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Header/_items"
             }
           }
         }
@@ -194,10 +170,10 @@
     "extends": {
       "extensions": {
         "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ListReport.ListReportController": {
+          "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid::headerList": {
             "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
           },
-          "sap.fe.templates.ObjectPage.ObjectPageController": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid::headerObjectPage": {
             "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
           }
         }

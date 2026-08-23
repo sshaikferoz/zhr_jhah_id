@@ -2,10 +2,10 @@
     xmlns="sap.m" 
     xmlns:core="sap.ui.core">
     
-    <VBox visible="{employeeInfo>/isVisible}" class="violatorHeaderWrapper sapUiMediumMarginBottom">
+    <VBox visible="{employeeInfo>/isVisible}" width="100%" class="violatorHeaderWrapper sapUiMediumMarginBottom">
         
         <!-- MAIN STRIP: Employee Details -->
-        <HBox class="nativeViolatorStrip" wrap="Wrap">
+        <HBox width="100%" class="nativeViolatorStrip" wrap="Wrap">
             
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
