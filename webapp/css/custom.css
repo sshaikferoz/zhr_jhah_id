@@ -1,12 +1,77 @@
 /* =========================================================
-1. EMPLOYEE & HR MODE (Hide Admin Actions)
-   - Hides Approve, Reject, No Show, Issue ID
-   - Leaves Create, Delete, Edit, and Reschedule VISIBLE
+   0. PREVENT BUTTON FLASHING WHILE LOADING DATA
 ========================================================= */
-.zhrjhahsecid-app.employeeMode [id*="ApproveArea"],
-.zhrjhahsecid-app.employeeMode [id*="RejectArea"],
-.zhrjhahsecid-app.employeeMode [id*="MarkNoShow"],
-.zhrjhahsecid-app.employeeMode [id*="IssueID"] {
+.zhrjhahsecid-app.loadingOwnershipMode [id*="CreateNewIdReq" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="grantAccess" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="rejectAccess" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="reschedulePopup" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="rejectAppointment" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="schedulePopup" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="MarkNoShow" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="renewID" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="IssueID" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="CancelRequest" i],
+.zhrjhahsecid-app.loadingOwnershipMode [id*="CreateSelfIdReq" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+/* =========================================================
+   0. TAB AUTHORIZATION LOGIC (ID-Based, NOT Label-Based)
+========================================================= */
+
+/* Employee Mode: Hide both HR and Security Admin tabs */
+.zhrjhahsecid-app.employeeMode [id*="HRTabKey" i],
+.zhrjhahsecid-app.employeeMode [id*="AdminTabKey" i] {
+    display: none !important;
+}
+
+/* HR Mode: Hide Security Admin tab */
+.zhrjhahsecid-app.hrMode [id*="AdminTabKey" i] {
+    display: none !important;
+}
+
+/* Security Admin Mode: Hide HR tab */
+.zhrjhahsecid-app.securityMode [id*="HRTabKey" i] {
+    display: none !important;
+}
+
+/* =========================================================
+   OBJECT PAGE BUTTON AUTHORIZATIONS (Role-Based Hiding)
+========================================================= */
+
+/* 1. EMPLOYEE MODE: Hide all HR and Security Admin buttons */
+.zhrjhahsecid-app.employeeMode [id*="CreateNewIdReq" i],
+.zhrjhahsecid-app.employeeMode [id*="grantAccess" i],
+.zhrjhahsecid-app.employeeMode [id*="rejectAccess" i],
+.zhrjhahsecid-app.employeeMode [id*="reschedulePopup" i],
+.zhrjhahsecid-app.employeeMode [id*="rejectAppointment" i],
+.zhrjhahsecid-app.employeeMode [id*="schedulePopup" i],
+.zhrjhahsecid-app.employeeMode [id*="MarkNoShow" i],
+.zhrjhahsecid-app.employeeMode [id*="IssueID" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 2. HR MODE: Hide Security Admin buttons */
+.zhrjhahsecid-app.hrMode [id*="grantAccess" i],
+.zhrjhahsecid-app.hrMode [id*="rejectAccess" i],
+.zhrjhahsecid-app.hrMode [id*="reschedulePopup" i],
+.zhrjhahsecid-app.hrMode [id*="rejectAppointment" i],
+.zhrjhahsecid-app.hrMode [id*="schedulePopup" i],
+.zhrjhahsecid-app.hrMode [id*="MarkNoShow" i],
+.zhrjhahsecid-app.hrMode [id*="IssueID" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 3. SECURITY ADMIN MODE: Hide HR buttons */
+.zhrjhahsecid-app.securityMode [id*="CreateNewIdReq" i] {
     display: none !important;
     visibility: hidden !important;
     width: 0 !important;
@@ -14,85 +79,16 @@
 }
 
 /* =========================================================
-2. SECURITY MODE (Hide Employee/HR Actions)
-   - Hides Create, Delete, and Edit
-   - Leaves Approve, Reject, No Show, Issue ID, and Reschedule VISIBLE
+   1. GLOBALLY HIDE STANDARD DELETE ON LIST
 ========================================================= */
-.zhrjhahsecid-app.securityMode [id*="StandardAction::Create"],
-.zhrjhahsecid-app.securityMode [id*="StandardAction::Delete"],
-.zhrjhahsecid-app.securityMode [id*="StandardAction::Edit"] {
+[id*="StandardAction::Delete" i] {
     display: none !important;
 }
 
-/* =========================================================
-3. KPI CARDS (TOP BOXES) - HOVER ANIMATIONS & SHADOWS
-========================================================= */
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem,
-.zhrjhahsecid-app [id*="::HeaderFacet::"] {
-    background: #ffffff !important; 
-    border-radius: 10px !important; 
-    border: 1px solid rgba(0,0,0, 0.04) !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important; 
-    padding: 0.75rem 1.25rem !important;
-    margin-right: 0.75rem !important;
-    margin-bottom: 0.5rem !important;
-    transition: all 0.2s ease-in-out !important; 
+.sapUxAPObjectPageSubSection [id*="StandardAction::Delete" i] {
+    display: inline-block !important;
 }
 
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem:hover,
-.zhrjhahsecid-app [id*="::HeaderFacet::"]:hover {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important; 
-    transform: translateY(-3px) !important; 
-}
-
-/* Force KPI text to be bold */
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMText,
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMTitle,
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMLabel,
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMObjectNumberText,
-.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMObjectNumberTitle,
-.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMText,
-.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMTitle,
-.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMLabel,
-.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMObjectNumberText,
-.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMObjectNumberTitle {
-    font-weight: bold !important;
-}
-
-/* =========================================================
-4. MAIN HEADER STRIP (COMPACTED SPACING)
-========================================================= */
-.zhrjhahsecid-app .nativeViolatorStrip {
-    flex-basis: 100%;
-    width: 100%;
-    margin-bottom: 0.5rem !important; 
-    background: #ffffff !important; 
-    border-radius: 10px !important; 
-    border: 1px solid rgba(0,0,0, 0.04) !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important; 
-    padding: 0.5rem 1rem !important; 
-}
-
-.zhrjhahsecid-app .violatorCol {
-    margin-right: 2rem !important; 
-    margin-bottom: 0.25rem !important;
-}
-
-.zhrjhahsecid-app .violatorRow {
-    align-items: center !important;
-    margin-bottom: 2px !important; 
-}
-.zhrjhahsecid-app .violatorLabel {
-    font-size: 0.8125rem !important;
-    color: #6a6d70 !important;
-    line-height: normal !important;
-}
-.zhrjhahsecid-app .violatorValue {
-    font-size: 0.8125rem !important;
-    color: #32363a !important;
-    font-weight: 600 !important;
-    line-height: normal !important;
-}
 
 /* =========================================================
    2. JHAH CUSTOM THEME FIXES (Trims massive gaps)
@@ -130,41 +126,606 @@ html[class*="sapUiTheme-JHAH"] .sapUiFormElement {
     margin-left: 0 !important;
 }
 
-/* =========================================================
-6. SAFETY FIX: FORCE FOOTER BUTTONS TO BE CLICKABLE
-========================================================= */
-.sapFDynamicPageFooter, .sapMPageFooter {
-    z-index: 9999 !important;
-    position: relative !important;
-    pointer-events: auto !important;
-}
 
 /* =========================================================
-7. CONVERT INLINE UPLOAD ARROW ICON (↑) TO "UPLOAD" TEXT
+   3. CONVERT INLINE UPLOAD ARROW TO "UPLOAD"
 ========================================================= */
-/* Change the font family of the specific upload icon to standard text */
 .zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader .sapUiIcon,
-.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapUiIcon {
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapUiIcon,
+.zhrjhahsecid-app [id*="Attachment"] tbody .sapUiUfdFileUploader .sapUiIcon,
+.zhrjhahsecid-app [id*="Attachment"] tbody [id*="uploader"] .sapUiIcon {
     font-family: var(--sapFontFamily, "72", "Arial", sans-serif) !important;
 }
 
-/* Replace the icon character with the word "Upload" */
 .zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader .sapUiIcon::before,
-.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapUiIcon::before {
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapUiIcon::before,
+.zhrjhahsecid-app [id*="Attachment"] tbody .sapUiUfdFileUploader .sapUiIcon::before,
+.zhrjhahsecid-app [id*="Attachment"] tbody [id*="uploader"] .sapUiIcon::before {
     content: "Upload" !important;
     font-size: 0.875rem !important;
     font-weight: bold !important;
 }
 
-/* Expand the button so the text fits nicely without getting cut off */
 .zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader,
 .zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"],
 .zhrjhahsecid-app [id*="Attachment"] tbody .sapUiUfdFileUploader,
 .zhrjhahsecid-app [id*="Attachment"] tbody [id*="uploader"],
 .zhrjhahsecid-app [id*="Evidence"] tbody .sapUiUfdFileUploader .sapMBtnInner,
-.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapMBtnInner {
+.zhrjhahsecid-app [id*="Evidence"] tbody [id*="uploader"] .sapMBtnInner,
+.zhrjhahsecid-app [id*="Attachment"] tbody .sapUiUfdFileUploader .sapMBtnInner,
+.zhrjhahsecid-app [id*="Attachment"] tbody [id*="uploader"] .sapMBtnInner {
     width: auto !important;
     min-width: 4.5rem !important;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
+}
+
+
+/* =========================================================
+   4. MODERN COMPACT APPOINTMENT SLOT PICKER
+========================================================= */
+.zhrjhahsecid-app .jhahCustomTimeSlot {
+    width: 100% !important;
+}
+
+/* Placeholder / empty state */
+.zhrjhahsecid-app .jhahCustomTimeSlot .sapMInputBaseInner {
+    text-align: left !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
+    color: #6a6d70 !important;
+}
+
+/* Selected slot */
+.zhrjhahsecid-app .jhahCustomTimeSlot.sapMInputBaseHasValue .sapMInputBaseInner {
+    text-align: left !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    color: #32363a !important;
+}
+
+/* =========================================================
+   5. POPOVER (SLOT PICKER) STYLING
+========================================================= */
+.jhahAestheticPopover {
+    width: 360px !important;
+    max-width: 360px !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 14px !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden !important;
+}
+
+.jhahAestheticPopover .sapMPopoverHeader {
+    min-height: 44px !important;
+    height: 44px !important;
+    padding: 0 14px !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    border-bottom: 1px solid #edf0f3 !important;
+}
+
+.jhahAestheticPopover .sapMBar {
+    background: #ffffff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.jhahAestheticPopover .sapMBarMiddle .sapMTitle {
+    color: #0a6ed1 !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+}
+
+.jhahAestheticPopover .sapMPopoverCont {
+    padding: 12px !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 8px !important;
+    row-gap: 8px !important;
+    align-items: center !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMFlexItem {
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 9px !important;
+    background: #ffffff !important;
+    border: 1px solid #c7ced8 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtnInner {
+    width: 100% !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    color: #0a6ed1 !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    line-height: 36px !important;
+    white-space: nowrap !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn:hover:not(.sapMBtnDisabled) {
+    background: #f5f9fd !important;
+    border-color: #8fa8c0 !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn:hover:not(.sapMBtnDisabled) .sapMBtnInner {
+    background: #f5f9fd !important;
+    color: #0a6ed1 !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn.sapMBtnEmphasized {
+    background: #0a6ed1 !important;
+    border-color: #0a6ed1 !important;
+    box-shadow: 0 2px 5px rgba(10, 110, 209, 0.18) !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn.sapMBtnEmphasized .sapMBtnInner {
+    background: #0a6ed1 !important;
+    color: #ffffff !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn.sapMBtnDisabled {
+    opacity: 0.45 !important;
+    background: #ffffff !important;
+    border-color: #d9dee5 !important;
+}
+
+.jhahAestheticPopover .zhrSlotGrid .sapMBtn.sapMBtnDisabled .sapMBtnInner {
+    background: #ffffff !important;
+    color: #8993a1 !important;
+}
+
+.jhahAestheticPopover .sapMText {
+    color: #667085 !important;
+    font-size: 0.76rem !important;
+    line-height: 1.4 !important;
+}
+
+.jhahAestheticPopover .sapMPopoverFooter {
+    background: #ffffff !important;
+    background-image: none !important;
+    border-top: 1px solid #edf0f3 !important;
+}
+
+.jhahAestheticPopover .sapMFooter-CTX {
+    background: #ffffff !important;
+    background-image: none !important;
+}
+
+.jhahAestheticPopover .sapMPopoverFooter .sapMBtn {
+    height: 32px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.jhahAestheticPopover .sapMPopoverFooter .sapMBtnInner {
+    height: 30px !important;
+    padding: 0 14px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: #0a6ed1 !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+}
+
+.jhahAestheticPopover .sapMPopoverFooter .sapMBtn:hover .sapMBtnInner {
+    background: #f4f8fc !important;
+}
+
+
+/* =========================================================
+   6. HIDE FIORI NATIVE DATE/TIME FIELDS
+========================================================= */
+.hideFioriTimeField,
+.jhahHideElement {
+    display: none !important;
+}
+
+.zhrjhahsecid-app .jhahNukeField {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+
+/* =========================================================
+   7. HEADER GAPS & KPI CARDS
+========================================================= */
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContent {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderDetails {
+    margin-bottom: 0 !important;
+}
+
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContent > .sapMFlexBox {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Header content cards - no gradient */
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem,
+.zhrjhahsecid-app [id*="::HeaderFacet::"] {
+    background: #ffffff !important;
+    background-image: none !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03) !important;
+    padding: 0.75rem 1.25rem !important;
+    margin-right: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem:hover,
+.zhrjhahsecid-app [id*="::HeaderFacet::"]:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-3px) !important;
+}
+
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMText,
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMTitle,
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMLabel,
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMObjectNumberText,
+.zhrjhahsecid-app .sapUxAPObjectPageHeaderContentItem .sapMObjectNumberTitle,
+.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMText,
+.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMTitle,
+.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMLabel,
+.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMObjectNumberText,
+.zhrjhahsecid-app [id*="::HeaderFacet::"] .sapMObjectNumberTitle {
+    font-weight: bold !important;
+}
+
+
+/* =========================================================
+   8. HR STRIP 
+========================================================= */
+.nativeViolatorStrip {
+    display: none !important; /* Default hidden */
+    opacity: 0 !important;
+    visibility: hidden !important;
+    flex-wrap: wrap !important;
+    flex-basis: 100% !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+    padding: 0.5rem 1rem !important;
+}
+
+.nativeViolatorStrip.jhahShowHrStrip {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.violatorCol {
+    margin-right: 2rem !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.violatorRow {
+    align-items: center !important;
+    margin-bottom: 2px !important;
+}
+
+.violatorLabel {
+    font-size: 0.8125rem !important;
+    color: #6a6d70 !important;
+    line-height: normal !important;
+}
+
+.violatorValue {
+    font-size: 0.8125rem !important;
+    color: #32363a !important;
+    font-weight: 600 !important;
+    line-height: normal !important;
+    text-transform: uppercase !important;
+}
+
+
+/* =========================================================
+   9. ACTIVE ID STRIP
+========================================================= */
+.zhrjhahsecid-app .zhrActiveIdWrapper {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 16px 20px !important;
+    margin-bottom: 1rem !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    border: 1px solid #e3e8ef !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 8px 22px rgba(0, 0, 0, 0.035) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    cursor: default !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdWrapper:hover {
+    background-color: #fbfdff !important;
+    background-image: none !important;
+    border-color: #c9d8e8 !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-3px) !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdCard {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdContent {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdGrid {
+    display: flex !important;
+    gap: 2rem !important;
+    margin-left: 1.5rem !important;
+    flex-wrap: wrap !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdCol {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+    min-width: 145px !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdAvatar {
+    background: #f2f4f6 !important;
+    border-radius: 50% !important;
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdIcon {
+    font-size: 1.35rem !important;
+    color: #32363a !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdLabel {
+    color: #64748b !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdName {
+    font-size: 0.86rem !important;
+    font-weight: 700 !important;
+    color: #0f2d4a !important;
+    text-transform: uppercase !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdValue {
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #172b4d !important;
+}
+
+.zhrjhahsecid-app .zhrPrimaryValue {
+    color: #0a6ed1 !important;
+    font-weight: 700 !important;
+}
+
+.zhrjhahsecid-app .zhrExpiringRed {
+    color: #b02323 !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdStatusBox {
+    margin-left: auto !important;
+}
+
+.zhrjhahsecid-app .zhrActiveIdStatusPill .sapMObjStatusText {
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    font-size: 0.875rem !important;
+}
+
+
+/* =========================================================
+   10. GLOBALLY HIDE STANDARD TABLE "CREATE" BUTTON ON OBJECT PAGE
+========================================================= */
+.sapUxAPObjectPageSubSection [id*="::StandardAction::Create" i],
+.sapUxAPObjectPageSubSection [id*="::createButton" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}
+
+
+/* =========================================================
+   11. REMOVE EDITING STATUS FILTER + ITS LAYOUT GAP
+========================================================= */
+[id*="DraftEditingStatus" i] {
+    display: none !important;
+}
+
+.sapUiAFLayoutItem:has([id*="DraftEditingStatus" i]) {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+
+/* =========================================================
+   12. JUSTIFICATION TEXTAREA OVERRIDES
+========================================================= */
+.sapUiFormCLCellsS12:has([id*="JustificationTab"][id*="Comments"][id*="Field-content"]),
+.sapUiFormCLCellsL12:has([id*="JustificationTab"][id*="Comments"][id*="Field-content"]) {
+    width: 700px !important;
+    max-width: 700px !important;
+    min-width: 700px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+[id*="JustificationTab"][id*="Comments"][id*="Field-content"],
+[id*="JustificationTab"][id*="Comments"][id*="Field-edit"] {
+    width: 1000px !important;
+    max-width: 1000px !important;
+    box-sizing: border-box !important;
+}
+
+[id*="JustificationTab"][id*="Comments"][id*="Field-edit-content"] {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+[id*="JustificationTab"][id*="Comments"][id*="Field-edit-inner"] {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+/* =========================================================
+   13. GLOBALLY HIDE SHARE & SETTINGS (GEAR) ICONS
+========================================================= */
+
+/* Hide Share button everywhere in the Self-ID app */
+.zhrjhahsecid-app button[title="Share" i],
+.zhrjhahsecid-app button[aria-label="Share" i],
+.zhrjhahsecid-app [id*="::Share" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Hide the Fiori "Settings" (Gear) icon on all tables */
+.zhrjhahsecid-app [id*="LineItem-settings" i],
+.zhrjhahsecid-app [id*="::table::"][id*="-settings" i] {
+    display: none !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+
+/* =========================================================
+   OBJECT PAGE RECORD-LEVEL AUTHORIZATIONS
+   (Prevents Admins from approving their own requests, 
+    and prevents them from cancelling others' requests)
+========================================================= */
+
+/* 1. If looking at MY OWN request: Hide all Admin/HR actions */
+.zhrjhahsecid-app.myRequestMode [id*="CreateNewIdReq" i],
+.zhrjhahsecid-app.myRequestMode [id*="grantAccess" i],
+.zhrjhahsecid-app.myRequestMode [id*="rejectAccess" i],
+.zhrjhahsecid-app.myRequestMode [id*="reschedulePopup" i],
+.zhrjhahsecid-app.myRequestMode [id*="rejectAppointment" i],
+.zhrjhahsecid-app.myRequestMode [id*="schedulePopup" i],
+.zhrjhahsecid-app.myRequestMode [id*="MarkNoShow" i],
+.zhrjhahsecid-app.myRequestMode [id*="renewID" i],
+.zhrjhahsecid-app.myRequestMode [id*="IssueID" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 2. If looking at SOMEONE ELSE'S request: Hide Employee actions */
+.zhrjhahsecid-app.otherRequestMode [id*="CancelRequest" i],
+.zhrjhahsecid-app.otherRequestMode [id*="CreateSelfIdReq" i] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 3. Base Role Constraints (Enforced regardless of ownership) */
+.zhrjhahsecid-app.employeeMode [id*="CreateNewIdReq" i],
+.zhrjhahsecid-app.employeeMode [id*="grantAccess" i],
+.zhrjhahsecid-app.employeeMode [id*="rejectAccess" i],
+.zhrjhahsecid-app.employeeMode [id*="reschedulePopup" i],
+.zhrjhahsecid-app.employeeMode [id*="rejectAppointment" i],
+.zhrjhahsecid-app.employeeMode [id*="schedulePopup" i],
+.zhrjhahsecid-app.employeeMode [id*="MarkNoShow" i],
+.zhrjhahsecid-app.employeeMode [id*="renewID" i],
+.zhrjhahsecid-app.employeeMode [id*="IssueID" i] {
+    display: none !important; visibility: hidden !important; width: 0 !important; pointer-events: none !important;
+}
+
+.zhrjhahsecid-app.hrMode [id*="grantAccess" i],
+.zhrjhahsecid-app.hrMode [id*="rejectAccess" i],
+.zhrjhahsecid-app.hrMode [id*="reschedulePopup" i],
+.zhrjhahsecid-app.hrMode [id*="rejectAppointment" i],
+.zhrjhahsecid-app.hrMode [id*="schedulePopup" i],
+.zhrjhahsecid-app.hrMode [id*="MarkNoShow" i],
+.zhrjhahsecid-app.hrMode [id*="renewID" i],
+.zhrjhahsecid-app.hrMode [id*="IssueID" i] {
+    display: none !important; visibility: hidden !important; width: 0 !important; pointer-events: none !important;
+}
+
+.zhrjhahsecid-app.securityMode [id*="CreateNewIdReq" i] {
+    display: none !important; visibility: hidden !important; width: 0 !important; pointer-events: none !important;
 }
