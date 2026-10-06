@@ -101,12 +101,26 @@
         {
           "pattern": ":?query:",
           "name": "headerList",
-          "target": "headerList" 
+          "target": [
+            "headerList"
+          ]
         },
         {
           "pattern": "Header({key}):?query:",
           "name": "headerObjectPage",
-          "target": "headerObjectPage" 
+          "target": [
+            "headerList",
+            "headerObjectPage"
+          ]
+        },
+        {
+          "pattern": "Header({key})/_items({key2}):?query:",
+          "name": "appAreaObjectPage",
+          "target": [
+            "headerList",
+            "headerObjectPage",
+            "appAreaObjectPage"
+          ]
         }
       ],
       "targets": {
@@ -117,7 +131,27 @@
           "options": {
             "settings": {
               "contextPath": "/Header",
-              "variantManagement": "None",
+              "variantManagement": "Page",
+              "views": {
+                "paths": [
+                  {
+                    "key": "HRTabKey",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#HRTab"
+                  },
+                  {
+                    "key": "AdminTabKey",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#AdminTab"
+                  },
+                                    {
+                    "key": "EmpTabKey",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#EmpTab"
+                  }
+                ],
+                "showCounts": true
+              },
+              "content": {
+                "header": {}
+              },
               "navigation": {
                 "Header": {
                   "detail": {
@@ -128,10 +162,14 @@
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable"
+                    "type": "ResponsiveTable",
+                    "personalization": {
+                      "column": false
+                    }
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
@@ -153,12 +191,10 @@
                   }
                 }
               },
-              "controlConfiguration": {
-                "_items/@com.sap.vocabularies.UI.v1.LineItem": {
-                  "tableSettings": {
-                    "creationMode": {
-                      "name": "Inline"
-                    }
+              "navigation": {
+                "_items": {
+                  "detail": {
+                    "route": "appAreaObjectPage"
                   }
                 }
               }

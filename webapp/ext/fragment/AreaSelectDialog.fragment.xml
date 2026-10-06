@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <SelectDialog
+        id="areaSelectDialog"
+        title="Select Access Areas"
+        multiSelect="true"
+        rememberSelections="true"
+        search=".onAreaSearch"
+        confirm=".onAreaConfirm"
+        items="{
+            path: '/AreaValueHelp',
+            parameters: { $$operationMode: 'Server' }
+        }">
+        <StandardListItem title="{AccessArea}" />
+    </SelectDialog>
+</core:FragmentDefinition>

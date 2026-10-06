@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <ResponsivePopover
+        id="appointmentSlotPopover"
+        title="Available Time Slots"
+        placement="VerticalPreferredBottom"
+        contentWidth="22rem"
+        contentHeight="auto"
+        class="jhahAestheticPopover">
+        
+        <Text
+            text="Select a date to view the available time slots."
+            visible="{= !${apptslots>/currentSlots}.length }" />
+            
+        <FlexBox 
+            class="zhrSlotGrid"
+            items="{apptslots>/currentSlots}" 
+            wrap="Wrap" 
+            justifyContent="SpaceBetween">
+            <items>
+                <Button 
+                    text="{apptslots>rangeLabel}" 
+                    enabled="{= !${apptslots>full} }"
+                    type="{= ${apptslots>key} === ${apptslots>/selectedKey} ? 'Emphasized' : 'Default' }"
+                    press=".onAppointmentSlotPress">
+                    
+                    <customData>
+                        <core:CustomData key="bucket" value="{= String(${apptslots>bucket}) }" writeToDom="true" />
+                    </customData>
+                    
+                </Button>
+            </items>
+        </FlexBox>
+
+        <endButton>
+            <Button text="Cancel" press=".onAppointmentSlotPopoverCancel" />
+        </endButton>
+    </ResponsivePopover>
+</core:FragmentDefinition>
