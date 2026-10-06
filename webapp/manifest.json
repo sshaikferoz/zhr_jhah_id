@@ -101,26 +101,12 @@
         {
           "pattern": ":?query:",
           "name": "headerList",
-          "target": [
-            "headerList"
-          ]
+          "target": "headerList"
         },
         {
           "pattern": "Header({key}):?query:",
           "name": "headerObjectPage",
-          "target": [
-            "headerList",
-            "headerObjectPage"
-          ]
-        },
-        {
-          "pattern": "Header({key})/_items({key2}):?query:",
-          "name": "appAreaObjectPage",
-          "target": [
-            "headerList",
-            "headerObjectPage",
-            "appAreaObjectPage"
-          ]
+          "target": "headerObjectPage"
         }
       ],
       "targets": {
@@ -191,10 +177,20 @@
                   }
                 }
               },
-              "navigation": {
-                "_items": {
-                  "detail": {
-                    "route": "appAreaObjectPage"
+              "controlConfiguration": {
+                "_items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    }
+                  },
+                  "actions": {
+                    "ActionSelectAreas": {
+                      "text": "Select Access Areas",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt.openAreaSelectionDialog",
+                      "requiresSelection": false,
+                      "visible": "{= ${ui>/editMode} === 'Editable' }"
+                    }
                   }
                 }
               }
