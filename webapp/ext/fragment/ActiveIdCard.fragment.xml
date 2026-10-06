@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout">
+    <VBox id="myActiveIDCard" class="zhrActiveIdWrapper">
+        <HBox class="zhrActiveIdCard" alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap">
+            
+            <HBox alignItems="Center" class="zhrActiveIdContent">
+                <VBox class="zhrActiveIdAvatar" justifyContent="Center" alignItems="Center">
+                    <core:Icon src="sap-icon://employee-pane" class="zhrActiveIdIcon" />
+                </VBox>
+                
+                <HBox class="zhrActiveIdGrid" wrap="Wrap">
+                    <VBox class="zhrActiveIdCol">
+                        <Label text="Employee Name" class="zhrActiveIdLabel" />
+                        <Text text="{= ${activeIDModel>/name} || ${activeIDModel>/Name} || ${activeIDModel>/FullName} }" class="zhrActiveIdName" />
+                    </VBox>
+
+                    <VBox class="zhrActiveIdCol">
+                        <Label text="My Active ID" class="zhrActiveIdLabel" />
+                        <Text text="{= ${activeIDModel>/IdNumber} || ${activeIDModel>/RequestId} }" class="zhrActiveIdValue zhrPrimaryValue" />
+                    </VBox>
+                    
+                    <VBox class="zhrActiveIdCol">
+                        <Label text="Issue Date" class="zhrActiveIdLabel" />
+                        <Text text="{ path: 'activeIDModel>/IssueDate', type: 'sap.ui.model.odata.type.Date', formatOptions: { style: 'medium' } }" class="zhrActiveIdValue" />
+                    </VBox>
+                    
+                    <VBox class="zhrActiveIdCol">
+                        <Label text="Expiry Date" class="zhrActiveIdLabel" />
+                        <Text text="{ path: 'activeIDModel>/ExpiryDate', type: 'sap.ui.model.odata.type.Date', formatOptions: { style: 'medium' } }" class="zhrActiveIdValue" />
+                    </VBox>
+                    
+                    <VBox class="zhrActiveIdCol">
+                        <HBox alignItems="Center">
+                            <Label text="Days to Expire" class="zhrActiveIdLabel" />
+                            <core:Icon src="sap-icon://message-information" class="zhrInfoIcon sapUiTinyMarginBegin" tooltip="You can only raise a renew request within the 30-day window before your ID expires." />
+                        </HBox>
+                        <!-- Safely bound to JS property without using < or > -->
+                        <Text text="{activeIDModel>/DaystoExpireText}" class="{activeIDModel>/DaystoExpireClass}" />
+                    </VBox>
+                </HBox>
+            </HBox>
+
+            <VBox class="zhrActiveIdStatusBox" justifyContent="Center">
+                <ObjectStatus 
+                    text="{activeIDModel>/StatusText}" 
+                    state="{activeIDModel>/StatusState}" 
+                    class="zhrActiveIdStatusPill" />
+            </VBox>
+
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

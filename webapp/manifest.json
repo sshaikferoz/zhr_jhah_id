@@ -101,26 +101,12 @@
         {
           "pattern": ":?query:",
           "name": "headerList",
-          "target": [
-            "headerList"
-          ]
+          "target": "headerList"
         },
         {
           "pattern": "Header({key}):?query:",
           "name": "headerObjectPage",
-          "target": [
-            "headerList",
-            "headerObjectPage"
-          ]
-        },
-        {
-          "pattern": "Header({key})/_items({key2}):?query:",
-          "name": "appAreaObjectPage",
-          "target": [
-            "headerList",
-            "headerObjectPage",
-            "appAreaObjectPage"
-          ]
+          "target": "headerObjectPage"
         }
       ],
       "targets": {
@@ -131,7 +117,32 @@
           "options": {
             "settings": {
               "contextPath": "/Header",
-              "variantManagement": "None",
+              "variantManagement": "Page",
+              "views": {
+                "paths": [
+                  {
+                    "key": "HRTabKey",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#HRTab"
+                  },
+                  {
+                    "key": "AdminTabKey",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#AdminTab"
+                  },
+                                    {
+                    "key": "EmpTabKey",
+                    "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#EmpTab"
+                  }
+                ],
+                "showCounts": true
+              },
+              "content": {
+                "header": {
+                  "customHeader": {
+                    "expandedHeaderFragment": "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
+                    "collapsedHeaderFragment": "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard"
+                  }
+                }
+              },
               "navigation": {
                 "Header": {
                   "detail": {
@@ -142,10 +153,14 @@
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable"
+                    "type": "ResponsiveTable",
+                    "personalization": {
+                      "column": false
+                    }
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
@@ -162,30 +177,28 @@
                   "facets": {
                     "CustomEmployeeHeader": {
                       "type": "XMLFragment",
-                      "requestGroupId": "$auto.Workers",
                       "name": "com.jhah.zhrjhahsecid.ext.fragment.EmployeeHeader"
                     }
                   }
                 }
               },
-              "navigation": {
-                "_items": {
-                  "detail": {
-                    "route": "appAreaObjectPage"
+              "controlConfiguration": {
+                "_items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "creationMode": {
+                      "name": "Inline"
+                    }
+                  },
+                  "actions": {
+                    "ActionSelectAreas": {
+                      "text": "Select Access Areas",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt.openAreaSelectionDialog",
+                      "requiresSelection": false,
+                      "visible": "{= ${ui>/editMode} === 'Editable' }"
+                    }
                   }
                 }
               }
-            }
-          }
-        },
-        "appAreaObjectPage": {
-          "type": "Component",
-          "id": "appAreaObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Header/_items"
             }
           }
         }
@@ -194,10 +207,10 @@
     "extends": {
       "extensions": {
         "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ListReport.ListReportController": {
+          "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid::headerList": {
             "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
           },
-          "sap.fe.templates.ObjectPage.ObjectPageController": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid::headerObjectPage": {
             "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
           }
         }

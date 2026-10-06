@@ -2,11 +2,12 @@
     xmlns="sap.m" 
     xmlns:core="sap.ui.core">
     
-    <VBox visible="{employeeInfo>/isVisible}" class="violatorHeaderWrapper sapUiMediumMarginBottom">
+    <VBox visible="{employeeInfo>/isVisible}" width="100%" class="violatorHeaderWrapper sapUiMediumMarginBottom">
         
         <!-- MAIN STRIP: Employee Details -->
-        <HBox class="nativeViolatorStrip" wrap="Wrap">
+        <HBox width="100%" class="nativeViolatorStrip" wrap="Wrap">
             
+            <!-- Column 1: Primary Identity -->
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Name:" class="violatorLabel sapUiTinyMarginEnd" />
@@ -18,17 +19,19 @@
                 </HBox>
             </VBox>
             
+            <!-- Column 2: Organizational Role -->
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
-                    <Text text="Department:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/OrgText}" class="violatorValue" />
-                </HBox>
-                <HBox class="violatorRow" alignItems="Center">
                     <Text text="Job Title:" class="violatorLabel sapUiTinyMarginEnd" />
                     <Text text="{employeeInfo>/PostionText}" class="violatorValue" />
                 </HBox>
+                <HBox class="violatorRow" alignItems="Center">
+                    <Text text="Department:" class="violatorLabel sapUiTinyMarginEnd" />
+                    <Text text="{employeeInfo>/OrgText}" class="violatorValue" />
+                </HBox>
             </VBox>
 
+            <!-- Column 3: Security & Access -->
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Badge:" class="violatorLabel sapUiTinyMarginEnd" />
@@ -39,18 +42,33 @@
                     <Text text="{employeeInfo>/GovernmentID}" class="violatorValue" />
                 </HBox>
             </VBox>
-            
+
+            <!-- Column 4: Personal Information (SAUDI DATE FORMAT: DD/MM/YYYY) -->
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
-                    <Text text="Phone Num:" class="violatorLabel sapUiTinyMarginEnd" />
-                    <Text text="{employeeInfo>/Phone}" class="violatorValue" />
+                    <Text text="Date of Birth:" class="violatorLabel sapUiTinyMarginEnd" />
+                    <!-- Converts 19830101 to 01/01/1983 safely -->
+                    <Text text="{= ${employeeInfo>/DOB} ? (${employeeInfo>/DOB}.length === 8 ? ${employeeInfo>/DOB}.substring(6,8) + '/' + ${employeeInfo>/DOB}.substring(4,6) + '/' + ${employeeInfo>/DOB}.substring(0,4) : ${employeeInfo>/DOB}) : '' }" class="violatorValue" />
                 </HBox>
                 <HBox class="violatorRow" alignItems="Center">
+                    <Text text="Gender:" class="violatorLabel sapUiTinyMarginEnd" />
+                    <Text text="{employeeInfo>/gender}" class="violatorValue" />
+                </HBox>
+            </VBox>
+            
+            <!-- Column 5: Contact Details -->
+            <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">
+                <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Email:" class="violatorLabel sapUiTinyMarginEnd" />
                     <Text text="{employeeInfo>/EMail}" class="violatorValue" />
                 </HBox>
+                <HBox class="violatorRow" alignItems="Center">
+                    <Text text="Phone Num:" class="violatorLabel sapUiTinyMarginEnd" />
+                    <Text text="{employeeInfo>/Phone}" class="violatorValue" />
+                </HBox>
             </VBox>
 
+            <!-- Column 6: Additional Details -->
             <VBox class="violatorCol sapUiSmallMarginBottom">
                 <HBox class="violatorRow sapUiTinyMarginBottom" alignItems="Center">
                     <Text text="Blood Group:" class="violatorLabel sapUiTinyMarginEnd" />
