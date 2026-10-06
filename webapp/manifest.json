@@ -136,12 +136,7 @@
                 "showCounts": true
               },
               "content": {
-                "header": {
-                  "customHeader": {
-                    "expandedHeaderFragment": "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
-                    "collapsedHeaderFragment": "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard"
-                  }
-                }
+                "header": {}
               },
               "navigation": {
                 "Header": {

@@ -1380,33 +1380,50 @@ sap.ui.define([
             fnUpdate(); setTimeout(fnUpdate, 400); setTimeout(fnUpdate, 1200);
         },
 
-        _loadActiveIDAndFragment: function () {
-            // IMPORTANT: Synchronous concurrency guard.
-            // All callers share the exact same Promise.
-            if (this._oActiveIDLoadPromise) {
-                return this._oActiveIDLoadPromise;
+_loadActiveIDAndFragment: function () {
+            var oView = this.base.getView();
+            if (!oView) return Promise.resolve();
+
+            var sViewId = oView.getId();
+            this._log("ActiveID [1/7]: Init called for View: " + sViewId);
+
+            // 1. Check if we already created the fragment and saved it to the View
+            var oExistingFragment = oView.data("_jhah_activeIdFragment");
+            if (oExistingFragment) {
+                this._log("ActiveID [2/7]: Fragment already exists in View data. Re-inserting and aborting load.");
+                
+                var aDynamicPages = oView.findAggregatedObjects(true, function (o) { return o.isA("sap.f.DynamicPage"); });
+                if (aDynamicPages.length > 0 && !oView.isDestroyed()) {
+                    this._insertIdCardToPage(oExistingFragment, aDynamicPages[0]);
+                }
+                return Promise.resolve();
             }
 
-            this._oActiveIDLoadPromise = this._doLoadActiveIDAndFragment(0).catch(function(oError) {
-                this._log("Failed to load Active ID Fragment", oError);
-                
-                // Allow a legitimate future retry
-                this._oActiveIDLoadPromise = null;
-                
-                // Propagate the error so callers don't falsely assume success
+            // 2. Check if a load is already in progress
+            var oPromise = oView.data("_jhah_activeIdPromise");
+            if (oPromise) {
+                this._log("ActiveID [2/7]: Load already in progress. Returning existing Promise.");
+                return oPromise;
+            }
+
+            oPromise = this._doLoadActiveIDAndFragment(0).catch(function(oError) {
+                this._log("ActiveID [ERROR]: Failed to load Active ID Fragment", oError);
+                if (oView && !oView.isDestroyed() && !(oView.isDestroyStarted && oView.isDestroyStarted())) {
+                    oView.data("_jhah_activeIdPromise", null);
+                }
                 throw oError;
             }.bind(this));
 
-            return this._oActiveIDLoadPromise;
+            oView.data("_jhah_activeIdPromise", oPromise);
+            return oPromise;
         },
 
         _doLoadActiveIDAndFragment: async function (iRetryCount) {
             iRetryCount = iRetryCount || 0;
-            
             var oView = this.base.getView();
 
-            // Use public UI5 APIs to check destruction state
             if (!oView || oView.isDestroyed() || (oView.isDestroyStarted && oView.isDestroyStarted())) {
+                this._log("ActiveID [3/7]: View destroyed. Aborting.");
                 return;
             }
 
@@ -1417,50 +1434,47 @@ sap.ui.define([
             var oListReportPage = aDynamicPages.length > 0 ? aDynamicPages[0] : null;
 
             if (!oListReportPage || !oView.getModel()) {
-                // Prevent infinite polling if the view/model never becomes ready
                 if (iRetryCount >= 20) {
-                    this._log("Active ID fragment load aborted: view or model not ready after 20 attempts.");
+                    this._log("ActiveID [3/7]: View or model not ready after 20 attempts. Aborting.");
                     return;
                 }
-
-                // Await a delay, then recurse, keeping the Promise chain intact
-                await new Promise(function (resolve) {
-                    setTimeout(resolve, 200);
-                });
-
+                this._log("ActiveID [3/7]: View not ready, waiting 200ms... (Attempt " + iRetryCount + ")");
+                await new Promise(function (resolve) { setTimeout(resolve, 200); });
                 return this._doLoadActiveIDAndFragment(iRetryCount + 1);
             }
 
-            var sFragmentId = oView.getId() + "--myActiveIDCard";
-
-            // Defensive check: Already created?
-            var oExisting = sap.ui.core.Element.registry.get(sFragmentId);
-
-            if (oExisting) {
-                if (!oView.isDestroyed() && !(oView.isDestroyStarted && oView.isDestroyStarted())) {
-                    this._insertIdCardToPage(oExisting, oListReportPage);
-                }
+            // Re-check just in case it was built while waiting
+            if (oView.data("_jhah_activeIdFragment")) {
+                this._log("ActiveID [4/7]: Fragment created during wait. Aborting.");
                 return;
             }
 
+            this._log("ActiveID [4/7]: Triggering OData request to /activeID");
             var oBinding = oView.getModel().bindList("/activeID", null, null, null, { $$groupId: "$direct" });
             var aContexts = await oBinding.requestContexts(0, 1);
 
-            // View could have disappeared while OData was loading
             if (oView.isDestroyed() || (oView.isDestroyStarted && oView.isDestroyStarted())) {
+                this._log("ActiveID [5/7]: View destroyed during OData wait. Aborting.");
                 return;
             }
 
             if (!aContexts || aContexts.length === 0) {
+                this._log("ActiveID [5/7]: OData returned 0 rows. User has no ID. Aborting load.");
                 return;
             }
 
             var oData = aContexts[0].getObject();
+            this._log("ActiveID [5/7]: OData payload received", oData);
+
+            // GHOST RECORD CHECK: Make absolutely sure the payload has a real ID Number
+            if (!oData || !oData.IdNumber || String(oData.IdNumber).trim() === "") {
+                this._log("ActiveID [5/7]: OData returned a blank/ghost record. User has no ID. Aborting load.");
+                return;
+            }
 
             if (oData.ExpiryDate) {
                 var oExpiry = new Date(oData.ExpiryDate);
                 var oToday = new Date();
-                
                 oExpiry.setHours(0, 0, 0, 0);
                 oToday.setHours(0, 0, 0, 0);
 
@@ -1470,56 +1484,56 @@ sap.ui.define([
                 oData.IsExpiringSoon = iDays <= 30;
 
                 if (iDays < 0) {
-                    oData.StatusText = "EXPIRED";
-                    oData.StatusState = "Error";
-                    oData.DaystoExpireText = Math.abs(iDays) + " Days Ago";
-                    oData.DaystoExpireClass = "zhrActiveIdValue zhrExpiringRed";
+                    oData.StatusText = "EXPIRED"; oData.StatusState = "Error"; oData.DaystoExpireText = Math.abs(iDays) + " Days Ago"; oData.DaystoExpireClass = "zhrActiveIdValue zhrExpiringRed";
                 } else if (iDays === 0) {
-                    oData.StatusText = "EXPIRING TODAY";
-                    oData.StatusState = "Error";
-                    oData.DaystoExpireText = "0 Days";
-                    oData.DaystoExpireClass = "zhrActiveIdValue zhrExpiringRed";
+                    oData.StatusText = "EXPIRING TODAY"; oData.StatusState = "Error"; oData.DaystoExpireText = "0 Days"; oData.DaystoExpireClass = "zhrActiveIdValue zhrExpiringRed";
                 } else if (iDays <= 30) {
-                    oData.StatusText = "RENEWAL ELIGIBLE";
-                    oData.StatusState = "Warning";
-                    oData.DaystoExpireText = iDays + " Days";
-                    oData.DaystoExpireClass = "zhrActiveIdValue";
+                    oData.StatusText = "RENEWAL ELIGIBLE"; oData.StatusState = "Warning"; oData.DaystoExpireText = iDays + " Days"; oData.DaystoExpireClass = "zhrActiveIdValue";
                 } else {
-                    oData.StatusText = "ACTIVE";
-                    oData.StatusState = "Success";
-                    oData.DaystoExpireText = iDays + " Days";
-                    oData.DaystoExpireClass = "zhrActiveIdValue";
+                    oData.StatusText = "ACTIVE"; oData.StatusState = "Success"; oData.DaystoExpireText = iDays + " Days"; oData.DaystoExpireClass = "zhrActiveIdValue";
                 }
             }
 
             oView.setModel(new sap.ui.model.json.JSONModel(oData), "activeIDModel");
             this._updateRenewButtonState();
 
-            // Check once more before creating UI
             if (oView.isDestroyed() || (oView.isDestroyStarted && oView.isDestroyStarted())) {
                 return;
             }
 
-            // Verify registry one last time. 
-            oExisting = sap.ui.core.Element.registry.get(sFragmentId);
-            if (oExisting) {
-                this._insertIdCardToPage(oExisting, oListReportPage);
+            if (oView.data("_jhah_activeIdFragment")) {
                 return;
             }
 
-            // Fragment ID remains safely scoped to the View ID to follow UI5 best practices
-            var oFragment = await sap.ui.core.Fragment.load({
-                id: oView.getId(),
-                name: "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
-                controller: this
-            });
+            var oFragment;
+            try {
+                // FORCE A UNIQUE ID: This completely bypasses the UI5 duplicate ID crash
+                var sUniqueId = oView.getId() + "--myActiveIDCard--" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                this._log("ActiveID [6/7]: Loading Fragment XML with guaranteed unique ID: " + sUniqueId);
+
+                oFragment = await sap.ui.core.Fragment.load({
+                    id: sUniqueId,
+                    name: "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
+                    controller: this
+                });
+                this._log("ActiveID [7/7]: Fragment loaded successfully.");
+
+            } catch (e) {
+                this._log("ActiveID [ERROR]: Fragment.load crashed!", e);
+                throw e;
+            }
 
             if (oView.isDestroyed() || (oView.isDestroyStarted && oView.isDestroyStarted())) {
                 return;
             }
 
             var oRoot = Array.isArray(oFragment) ? oFragment[0] : oFragment;
+            
+            // Cache the physical fragment on the View so it never loads again
+            oView.data("_jhah_activeIdFragment", oRoot);
+
             this._insertIdCardToPage(oRoot, oListReportPage);
+            this._log("ActiveID [DONE]: Inserted into page.");
         },
         // _loadActiveIDAndFragment: function () {
         //     if (this._oActiveIDLoadPromise) return this._oActiveIDLoadPromise;
@@ -1848,8 +1862,14 @@ if (bIsListReport && !oView.__jhahTabFilterAttached) {
                     // Trigger the search on first load to bypass Fiori variant laziness
                     if (bIsInitialLoad && !oView.__jhahInitialLoadFired) {
                         oView.__jhahInitialLoadFired = true;
-                        if (typeof oFilterBar.triggerSearch === "function") oFilterBar.triggerSearch();
-                        else if (typeof oFilterBar.search === "function") oFilterBar.search();
+                        
+                        // Give Fiori's MDC state machine 250ms to digest the UI changes before searching
+                        setTimeout(function() {
+                            try {
+                                if (typeof oFilterBar.triggerSearch === "function") oFilterBar.triggerSearch();
+                                else if (typeof oFilterBar.search === "function") oFilterBar.search();
+                            } catch (e) { oExtension._log("Error triggering automatic search", e); }
+                        }, 250);
                     }
                 }, 400);
 
@@ -1919,20 +1939,6 @@ if (bIsListReport && !oView.__jhahTabFilterAttached) {
                     }
                 }
 
-                // Brute force visual Dropdown sync
-                try {
-                    var aInnerControls = oActionField.findAggregatedObjects(true, function(o) {
-                        return o.isA("sap.m.Select") || o.isA("sap.m.ComboBox");
-                    });
-                    
-                    aInnerControls.forEach(function(oInner) {
-                        if (typeof oInner.setSelectedKey === "function") {
-                            if (bIsMyRequests) oInner.setSelectedKey(""); 
-                            else oInner.setSelectedKey("true");
-                        }
-                    });
-                } catch(e) {}
-
                 // Trigger Search
                 var bIsFirstLoad = false;
                 if (bIsInitialLoad && !oView.__jhahInitialLoadFired) {
@@ -1942,8 +1948,20 @@ if (bIsListReport && !oView.__jhahTabFilterAttached) {
 
                 if (bChanged || bIsFirstLoad) {
                     oExtension._log("Filter changed or First Load detected. Triggering list search.");
-                    if (typeof oFilterBar.triggerSearch === "function") oFilterBar.triggerSearch();
-                    else if (typeof oFilterBar.search === "function") oFilterBar.search();
+                    
+                    // Give Fiori's internal MDC state machine 250ms to fully digest 
+                    // the new conditions before we programmatically hit the 'Go' button.
+                    setTimeout(function() {
+                        try {
+                            if (typeof oFilterBar.triggerSearch === "function") {
+                                oFilterBar.triggerSearch(); // Fires for V4 MDC FilterBar
+                            } else if (typeof oFilterBar.search === "function") {
+                                oFilterBar.search(); // Fires for V2 SmartFilterBar fallback
+                            }
+                        } catch (e) {
+                            oExtension._log("Error triggering automatic search", e);
+                        }
+                    }, 250);
                 }
 
             }, 400); 
@@ -1964,6 +1982,169 @@ if (bIsListReport && !oView.__jhahTabFilterAttached) {
         oView.__jhahTabFilterAttached = true;
     }
 }
+// ============================================================
+// ============================================================
+// if (bIsListReport && !oView.__jhahTabFilterAttached) {
+//     var aIconTabBars = oView.findAggregatedObjects(true, function (o) {
+//         return o.isA("sap.m.IconTabBar") || o.isA("sap.m.SegmentedButton");
+//     });
+
+//     if (aIconTabBars.length > 0) {
+//         var oIconTabBar = aIconTabBars[0];
+//         oExtension._log("Tab control found! ID: " + oIconTabBar.getId());
+        
+//         var fnApplyTabFilter = function(sTabKey, bIsInitialLoad) {
+//             var bIsEmployeeRole = document.body.classList.contains("employeeMode");
+
+//             // -------------------------------------------------------------
+//             // SCENARIO 1: EMPLOYEE ROLE
+//             // The backend handles the default value. We just need to hide 
+//             // the filter from the screen completely and trigger the load.
+//             // -------------------------------------------------------------
+//             if (bIsEmployeeRole) {
+//                 oExtension._log("Employee Mode active. Hiding 'Show Only Action Items' filter entirely.");
+//                 setTimeout(function () {
+//                     var aFilterBars = oView.findAggregatedObjects(true, function (o) {
+//                         return o.isA("sap.ui.mdc.FilterBar") || o.isA("sap.ui.comp.smartfilterbar.SmartFilterBar");
+//                     });
+//                     if (aFilterBars.length === 0) return;
+//                     var oFilterBar = aFilterBars[0];
+                    
+//                     // Locate and hide the IsActionItem field specifically
+//                     var aFilterItems = typeof oFilterBar.getFilterItems === "function" ? oFilterBar.getFilterItems() : [];
+//                     aFilterItems.forEach(function(f) {
+//                         var sPath = typeof f.getFieldPath === "function" ? f.getFieldPath() : "";
+//                         var sId = typeof f.getId === "function" ? f.getId() : "";
+//                         if (sPath === "IsActionItem" || sId.indexOf("IsActionItem") !== -1) {
+//                             if (typeof f.setVisible === "function") f.setVisible(false);
+                            
+//                             // Safe CSS override just for this specific field's layout container
+//                             var $wrapper = f.$().closest("[class*='FilterBarItem'], [class*='AFLLayoutItem'], [class*='sapUiLayoutColumn'], [class*='FilterBarBaseItem']");
+//                             if ($wrapper.length > 0) {
+//                                 $wrapper.attr("style", "display: none !important; width: 0px !important; margin: 0px !important; padding: 0px !important; overflow: hidden !important; visibility: hidden !important;");
+//                             }
+//                         }
+//                     });
+
+//                     // Trigger the search on first load to bypass Fiori variant laziness
+//                     if (bIsInitialLoad && !oView.__jhahInitialLoadFired) {
+//                         oView.__jhahInitialLoadFired = true;
+//                         if (typeof oFilterBar.triggerSearch === "function") oFilterBar.triggerSearch();
+//                         else if (typeof oFilterBar.search === "function") oFilterBar.search();
+//                     }
+//                 }, 400);
+
+//                 return; // EXIT EARLY: Do not run the value-forcing logic below
+//             }
+
+
+//             // -------------------------------------------------------------
+//             // SCENARIO 2: ADMIN / HR ROLE
+//             // Admin can see both tabs. Force "Yes" on Admin, Empty on Emp.
+//             // -------------------------------------------------------------
+//             var sTargetKey = String(sTabKey).toUpperCase();
+//             var bIsMyRequests = (sTargetKey.indexOf("EMPTAB") !== -1);
+//             oExtension._log("Admin/HR Mode. Is 'My Requests' Tab? " + bIsMyRequests);
+            
+//             setTimeout(function () {
+//                 var aFilterBars = oView.findAggregatedObjects(true, function (o) {
+//                     return o.isA("sap.ui.mdc.FilterBar") || o.isA("sap.ui.comp.smartfilterbar.SmartFilterBar");
+//                 });
+
+//                 if (aFilterBars.length === 0) return;
+//                 var oFilterBar = aFilterBars[0];
+
+//                 var aFilterItems = typeof oFilterBar.getFilterItems === "function" ? oFilterBar.getFilterItems() : [];
+//                 var oActionField = null;
+
+//                 for (var i = 0; i < aFilterItems.length; i++) {
+//                     var f = aFilterItems[i];
+//                     var sPath = typeof f.getFieldPath === "function" ? f.getFieldPath() : "";
+//                     var sId = typeof f.getId === "function" ? f.getId() : "";
+//                     if (sPath === "IsActionItem" || sId.indexOf("IsActionItem") !== -1) {
+//                         oActionField = f;
+//                         break;
+//                     }
+//                 }
+
+//                 if (!oActionField) return;
+
+//                 var bChanged = false;
+//                 var aCurrentConds = typeof oActionField.getConditions === "function" ? oActionField.getConditions() : [];
+
+//                 if (bIsMyRequests) {
+//                     // Admin looking at "My Requests" tab: Clear MDC conditions
+//                     if (aCurrentConds && aCurrentConds.length > 0) {
+//                         oExtension._log("Clearing MDC conditions for My Requests tab.");
+//                         if (typeof oActionField.setConditions === "function") oActionField.setConditions([]);
+//                         bChanged = true;
+//                     }
+//                 } else {
+//                     // Admin looking at "Employee Requests" tab: Force TRUE
+//                     var vTargetVal = true; 
+//                     if (typeof oFilterBar.getPropertyInfo === "function") {
+//                         var aPropInfo = oFilterBar.getPropertyInfo() || [];
+//                         var oProp = aPropInfo.find(function(p) { return p.name === "IsActionItem"; });
+//                         if (oProp && oProp.dataType && oProp.dataType.indexOf("String") !== -1) {
+//                             vTargetVal = "X";
+//                         }
+//                     }
+
+//                     var bNeedsUpdate = !aCurrentConds || aCurrentConds.length === 0 || aCurrentConds[0].values[0] !== vTargetVal;
+//                     if (bNeedsUpdate) {
+//                         oExtension._log("Forcing MDC condition to TRUE for Admin/HR tab.");
+//                         if (typeof oActionField.setConditions === "function") {
+//                             oActionField.setConditions([{ operator: "EQ", values: [vTargetVal], validated: "Validated" }]);
+//                         }
+//                         bChanged = true;
+//                     }
+//                 }
+
+//                 // Brute force visual Dropdown sync
+//                 try {
+//                     var aInnerControls = oActionField.findAggregatedObjects(true, function(o) {
+//                         return o.isA("sap.m.Select") || o.isA("sap.m.ComboBox");
+//                     });
+                    
+//                     aInnerControls.forEach(function(oInner) {
+//                         if (typeof oInner.setSelectedKey === "function") {
+//                             if (bIsMyRequests) oInner.setSelectedKey(""); 
+//                             else oInner.setSelectedKey("true");
+//                         }
+//                     });
+//                 } catch(e) {}
+
+//                 // Trigger Search
+//                 var bIsFirstLoad = false;
+//                 if (bIsInitialLoad && !oView.__jhahInitialLoadFired) {
+//                     bIsFirstLoad = true;
+//                     oView.__jhahInitialLoadFired = true;
+//                 }
+
+//                 if (bChanged || bIsFirstLoad) {
+//                     oExtension._log("Filter changed or First Load detected. Triggering list search.");
+//                     if (typeof oFilterBar.triggerSearch === "function") oFilterBar.triggerSearch();
+//                     else if (typeof oFilterBar.search === "function") oFilterBar.search();
+//                 }
+
+//             }, 400); 
+//         };
+
+//         // Listen for user tab clicks
+//         if (typeof oIconTabBar.attachSelect === "function") {
+//             oIconTabBar.attachSelect(function(oEvent) {
+//                 var sKey = oEvent.getParameter("key") || (oEvent.getParameter("item") ? oEvent.getParameter("item").getKey() : "");
+//                 fnApplyTabFilter(sKey, false); 
+//             });
+//         }
+
+//         // Fire once on page load
+//         var sInitialKey = typeof oIconTabBar.getSelectedKey === "function" ? oIconTabBar.getSelectedKey() : "";
+//         fnApplyTabFilter(sInitialKey, true); 
+
+//         oView.__jhahTabFilterAttached = true;
+//     }
+// }
 // ============================================================
                         // ============================================================
 

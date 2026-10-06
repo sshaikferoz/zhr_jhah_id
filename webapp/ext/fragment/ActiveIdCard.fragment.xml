@@ -9,7 +9,7 @@
                 
                 <HBox class="zhrActiveIdGrid" wrap="Wrap">
                     <VBox class="zhrActiveIdCol">
-                        <Label text="Employee Name" class="zhrActiveIdLabel" />
+                        <Label text="Name" class="zhrActiveIdLabel" />
                         <Text text="{= ${activeIDModel>/name} || ${activeIDModel>/Name} || ${activeIDModel>/FullName} }" class="zhrActiveIdName" />
                     </VBox>
 
@@ -33,7 +33,7 @@
                             <Label text="Days to Expire" class="zhrActiveIdLabel" />
                             <core:Icon src="sap-icon://message-information" class="zhrInfoIcon sapUiTinyMarginBegin" tooltip="You can only raise a renew request within the 30-day window before your ID expires." />
                         </HBox>
-                        <!-- Safely bound to JS property without using < or > -->
+                        
                         <Text text="{activeIDModel>/DaystoExpireText}" class="{activeIDModel>/DaystoExpireClass}" />
                     </VBox>
                 </HBox>
