@@ -64,6 +64,26 @@
             <EntityContainer Name="Container">
                 <EntitySet Name="ZHR_ID_AREA_VH" EntityType="com.sap.gateway.srvd_f4.zhr_id_area_vh.v0001.ZHR_ID_AREA_VHType"/>
             </EntityContainer>
+            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/AreaCode">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Access Area Code"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Area Code"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/AccessArea">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Area Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/PrimaryApprover">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Primary Approver"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/SecondaryApprover">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="Secondary Approver"/>
+            </Annotations>
             <Annotations Target="SAP__ParentService.AppAreaType/AreaCode">
                 <Annotation Term="SAP__common.ValueListMapping">
                     <Record>
@@ -179,15 +199,6 @@
                 <Annotation Term="SAP__UI.Hidden"/>
                 <Annotation Term="SAP__common.Label" String="UUID"/>
                 <Annotation Term="SAP__common.QuickInfo" String="16 Byte UUID in 16 Bytes (Raw Format)"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/AreaCode">
-                <Annotation Term="SAP__UI.Hidden"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/PrimaryApprover">
-                <Annotation Term="SAP__UI.Hidden"/>
-            </Annotations>
-            <Annotations Target="SAP__self.ZHR_ID_AREA_VHType/SecondaryApprover">
-                <Annotation Term="SAP__UI.Hidden"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

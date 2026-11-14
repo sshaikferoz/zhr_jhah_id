@@ -20,7 +20,7 @@ builder:
         app:
           name: ZHR_JHAHSEC_ID
           package: ZHR_ID
-          transport: DHCK943940
+          transport: DHCK944868
         exclude:
           - /test/
           - /localService/

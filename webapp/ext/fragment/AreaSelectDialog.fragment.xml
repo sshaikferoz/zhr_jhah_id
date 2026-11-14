@@ -10,6 +10,6 @@
             path: '/AreaValueHelp',
             parameters: { $$operationMode: 'Server' }
         }">
-        <StandardListItem title="{AccessArea}" />
+        <StandardListItem id="_IDGenStandardListItem" title="{AccessArea}" />
     </SelectDialog>
 </core:FragmentDefinition>
