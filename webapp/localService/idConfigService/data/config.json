@@ -1,0 +1,9 @@
+[
+  {
+    "AppId": "ID_APP",
+    "ParamKey": "RENEW_DAYS",
+    "Seqnr": "001",
+    "ParamVal": "30",
+    "ParamDesc": "Days before expiry in which an ID can be renewed"
+  }
+]

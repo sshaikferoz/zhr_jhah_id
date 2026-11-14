@@ -98,9 +98,11 @@ sap.ui.define(
           });
           if (bSelectedHidden && sFirstAllowed) {
             var oExtensionAPI = this.base.getExtensionAPI();
-            // ExtensionAPI expects the manifest key (views.paths[].key)
-            oExtensionAPI.setSelectedTab(sFirstAllowed);
-            // Switching tabs this way does not load the newly shown table; trigger "Go"
+            // ExtensionAPI.setSelectedTab only fires the bar's "select" event; FE then binds the
+            // table of the bar's *current* selectedKey. Move the selection first so the right
+            // table is bound, then let FE handle the switch and run the search.
+            oTabBar.setSelectedKey(fnTabKey(sFirstAllowed));
+            oExtensionAPI.setSelectedTab(sFirstAllowed); // expects the manifest key
             oExtensionAPI.refresh();
           }
         },

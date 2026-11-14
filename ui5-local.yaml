@@ -44,6 +44,7 @@ server:
             metadataPath: ./webapp/localService/mainService/metadata.xml
             mockdataPath: ./webapp/localService/mainService/data
             generateMockData: true
+            resolveExternalServiceReferences: true
           - urlPath: /sap/opu/odata4/sap/zsb_jhahsec_auth_o4/srvd_a2x/sap/zsrv_hr_jhahsec_auth_info/0001
             metadataPath: ./webapp/localService/idConfigService/metadata.xml
             mockdataPath: ./webapp/localService/idConfigService/data
