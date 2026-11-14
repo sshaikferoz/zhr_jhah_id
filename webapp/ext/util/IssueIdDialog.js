@@ -5,17 +5,16 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
-    "sap/base/Log"
+    "sap/base/Log",
+    "com/jhah/zhrjhahsecid/ext/util/Constants"
   ],
-  function (Fragment, JSONModel, Filter, FilterOperator, MessageToast, Log) {
+  function (Fragment, JSONModel, Filter, FilterOperator, MessageToast, Log, Constants) {
     "use strict";
 
-    var ACTION = "com.sap.gateway.srvd.zsrv_hr_id_app.v0001.IssueID";
-    var VALIDITY_OTHER = "OT"; // only this validity needs an explicit expiry date
-    var LOG_COMPONENT = "com.jhah.zhrjhahsecid.IssueIdDialog";
+    const LOG_COMPONENT = Constants.LOG_COMPONENT.ISSUE_ID_DIALOG;
 
     function todayEdm() {
-      var o = new Date();
+      const o = new Date();
       return new Date(o.getFullYear(), o.getMonth(), o.getDate());
     }
 
@@ -32,7 +31,7 @@ sap.ui.define(
     }
 
     IssueIdDialog.prototype._getBundle = function () {
-      return this._oExtensionAPI.getModel("i18n").getResourceBundle();
+      return this._oExtensionAPI.getModel(Constants.MODEL.I18N).getResourceBundle();
     };
 
     IssueIdDialog.prototype._getDialog = function () {
@@ -42,7 +41,7 @@ sap.ui.define(
           controller: this
         }).then(
           function (oDialog) {
-            oDialog.setModel(this._oModel, "issueId");
+            oDialog.setModel(this._oModel, Constants.MODEL.ISSUE_ID);
             this._oExtensionAPI.addDependent(oDialog);
             return oDialog;
           }.bind(this)
@@ -102,7 +101,7 @@ sap.ui.define(
     };
 
     IssueIdDialog.prototype.onValidityChange = function () {
-      var bOther = this._oModel.getProperty("/validity") === VALIDITY_OTHER;
+      var bOther = this._oModel.getProperty("/validity") === Constants.VALIDITY_OTHER;
       this._oModel.setProperty("/showExpiry", bOther);
       this._oModel.setProperty("/validityState", "None");
       if (!bOther) {
@@ -144,7 +143,7 @@ sap.ui.define(
           oDialog.setBusy(true);
           this._oExtensionAPI
             .getEditFlow()
-            .invokeAction(ACTION, {
+            .invokeAction(Constants.ACTION.ISSUE_ID, {
               contexts: this._oContext,
               parameterValues: [
                 { name: "Validity", value: oData.validity },

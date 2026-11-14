@@ -7,7 +7,8 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/base/Log",
-    "com/jhah/zhrjhahsecid/ext/util/UserRole"
+    "com/jhah/zhrjhahsecid/ext/util/UserRole",
+    "com/jhah/zhrjhahsecid/ext/util/Constants"
   ],
   function (
     ControllerExtension,
@@ -17,12 +18,14 @@ sap.ui.define(
     FilterOperator,
     MessageToast,
     Log,
-    UserRole
+    UserRole,
+    Constants
   ) {
     "use strict";
 
-    var LOG_COMPONENT = "com.jhah.zhrjhahsecid.ObjectPageExt";
-    var MAX_LOCKED_IN_TEXT = 3;
+    const LOG_COMPONENT = Constants.LOG_COMPONENT.OBJECT_PAGE;
+    const MODEL = Constants.MODEL;
+    const CSS_CLASS = Constants.CSS_CLASS;
 
     /**
      * Object Page extension for the ID request.
@@ -35,8 +38,8 @@ sap.ui.define(
      *
      * Handled here:
      *  - view state classes (role, ownership, edit/draft) for the transitional CSS action gate
-     *  - employee details strip in the header ("employeeInfo" model)
-     *  - areas already granted/requested elsewhere ("areaInfo" model)
+     *  - employee details strip in the header (MODEL.EMPLOYEE_INFO model)
+     *  - areas already granted/requested elsewhere (MODEL.AREA_INFO model)
      *  - "Select Access Areas" dialog (manifest custom action)
      */
     return ControllerExtension.extend(
@@ -46,10 +49,10 @@ sap.ui.define(
           onInit: function () {
             var oView = this.base.getView();
 
-            oView.setModel(new JSONModel({ isVisible: false }), "employeeInfo");
+            oView.setModel(new JSONModel({ isVisible: false }), MODEL.EMPLOYEE_INFO);
             oView.setModel(
               new JSONModel({ lockedText: "", locked: {} }),
-              "areaInfo"
+              MODEL.AREA_INFO
             );
 
             UserRole.applyModeClass(oView, this.base.getAppComponent().getModel());
@@ -85,10 +88,10 @@ sap.ui.define(
             return;
           }
           var oView = this.base.getView();
-          var oUiModel = this.base.getExtensionAPI().getModel("ui");
+          var oUiModel = this.base.getExtensionAPI().getModel(MODEL.UI);
           this._oEditModeBinding = oUiModel.bindProperty("/isEditable");
           var fnUpdate = function () {
-            oView.toggleStyleClass("uiEditMode", !!oUiModel.getProperty("/isEditable"));
+            oView.toggleStyleClass(CSS_CLASS.EDIT, !!oUiModel.getProperty("/isEditable"));
           };
           this._oEditModeBinding.attachChange(fnUpdate);
           fnUpdate();
@@ -100,9 +103,9 @@ sap.ui.define(
          */
         _applyRecordStateClasses: function (oContext, iRun) {
           var oView = this.base.getView();
-          oView.addStyleClass("loadingOwnershipMode");
-          oView.removeStyleClass("myRequestMode");
-          oView.removeStyleClass("otherRequestMode");
+          oView.addStyleClass(CSS_CLASS.OWNERSHIP_LOADING);
+          oView.removeStyleClass(CSS_CLASS.MY_REQUEST);
+          oView.removeStyleClass(CSS_CLASS.OTHER_REQUEST);
 
           Promise.all([
             oContext.requestProperty("IsMyRequest"),
@@ -118,10 +121,10 @@ sap.ui.define(
                 var bIsNew = bIsDraft && aValues[2] === false;
                 var bIsMine = bIsNew || aValues[0] === true;
 
-                oView.toggleStyleClass("myRequestMode", bIsMine);
-                oView.toggleStyleClass("otherRequestMode", !bIsMine);
-                oView.toggleStyleClass("draftMode", bIsDraft);
-                oView.removeStyleClass("loadingOwnershipMode");
+                oView.toggleStyleClass(CSS_CLASS.MY_REQUEST, bIsMine);
+                oView.toggleStyleClass(CSS_CLASS.OTHER_REQUEST, !bIsMine);
+                oView.toggleStyleClass(CSS_CLASS.DRAFT, bIsDraft);
+                oView.removeStyleClass(CSS_CLASS.OWNERSHIP_LOADING);
               }.bind(this)
             )
             .catch(function (oError) {
@@ -177,7 +180,7 @@ sap.ui.define(
         },
 
         _loadEmployee: function (sPayrollNum, iRun) {
-          var oEmployeeModel = this.base.getView().getModel("employeeInfo");
+          var oEmployeeModel = this.base.getView().getModel(MODEL.EMPLOYEE_INFO);
           if (!sPayrollNum || sPayrollNum === "0") {
             oEmployeeModel.setData({ isVisible: false });
             return;
@@ -225,7 +228,7 @@ sap.ui.define(
          * @returns {Promise<void>}
          */
         _loadExistingAreas: function (sPayrollNum, sRequestId, iRun) {
-          var oAreaModel = this.base.getView().getModel("areaInfo");
+          var oAreaModel = this.base.getView().getModel(MODEL.AREA_INFO);
           if (!sPayrollNum) {
             oAreaModel.setData({ lockedText: "", locked: {} });
             return Promise.resolve();
@@ -283,9 +286,9 @@ sap.ui.define(
             return "";
           }
           var oBundle = this._getBundle();
-          var sList = aNames.slice(0, MAX_LOCKED_IN_TEXT).join(", ");
-          if (aNames.length > MAX_LOCKED_IN_TEXT) {
-            sList += " " + oBundle.getText("existingAccessMore", [aNames.length - MAX_LOCKED_IN_TEXT]);
+          var sList = aNames.slice(0, Constants.MAX_LOCKED_AREAS_IN_TEXT).join(", ");
+          if (aNames.length > Constants.MAX_LOCKED_AREAS_IN_TEXT) {
+            sList += " " + oBundle.getText("existingAccessMore", [aNames.length - Constants.MAX_LOCKED_AREAS_IN_TEXT]);
           }
           return oBundle.getText("existingAccessText", [sList]);
         },
@@ -365,7 +368,7 @@ sap.ui.define(
         },
 
         _getLockedAreas: function () {
-          return this.base.getView().getModel("areaInfo").getProperty("/locked") || {};
+          return this.base.getView().getModel(MODEL.AREA_INFO).getProperty("/locked") || {};
         },
 
         _getItemCode: function (oItem) {
@@ -492,7 +495,7 @@ sap.ui.define(
 
 
         _getBundle: function () {
-          return this.base.getAppComponent().getModel("i18n").getResourceBundle();
+          return this.base.getAppComponent().getModel(MODEL.I18N).getResourceBundle();
         }
       }
     );

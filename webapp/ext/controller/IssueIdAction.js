@@ -1,6 +1,10 @@
 sap.ui.define(
-  ["sap/m/MessageToast", "com/jhah/zhrjhahsecid/ext/util/IssueIdDialog"],
-  function (MessageToast, IssueIdDialog) {
+  [
+    "sap/m/MessageToast",
+    "com/jhah/zhrjhahsecid/ext/util/IssueIdDialog",
+    "com/jhah/zhrjhahsecid/ext/util/Constants"
+  ],
+  function (MessageToast, IssueIdDialog, Constants) {
     "use strict";
 
     /**
@@ -8,7 +12,7 @@ sap.ui.define(
      * SAP Fiori elements calls them with "this" = the page's ExtensionAPI and
      * (pageContext, selectedContexts) as arguments.
      */
-    var _mDialogs = new WeakMap(); // one dialog per page (ExtensionAPI)
+    const _mDialogs = new WeakMap(); // one dialog per page (ExtensionAPI)
 
     function getDialog(oExtensionAPI) {
       if (!_mDialogs.has(oExtensionAPI)) {
@@ -29,7 +33,7 @@ sap.ui.define(
         return oContext.requestProperty("__OperationControl/IssueID").then(
           function (bAllowed) {
             if (bAllowed !== true) {
-              MessageToast.show(this.getModel("i18n").getResourceBundle().getText("issueIdNotAllowed"));
+              MessageToast.show(this.getModel(Constants.MODEL.I18N).getResourceBundle().getText("issueIdNotAllowed"));
               return undefined;
             }
             return getDialog(this).open(oContext);

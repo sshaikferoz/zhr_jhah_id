@@ -1,23 +1,19 @@
-sap.ui.define([], function () {
+sap.ui.define(["com/jhah/zhrjhahsecid/ext/util/Constants"], function (Constants) {
   "use strict";
 
   /**
-   * Reads numeric parameters (e.g. RENEW_DAYS) for the ID app from the shared configuration
-   * service, declared in manifest.json as data source "idConfigService" / model "idConfig".
+   * Reads numeric parameters (e.g. Constants.CONFIG.RENEW_DAYS) for the ID app from the shared
+   * configuration service (manifest data source "idConfigService", model Constants.MODEL.ID_CONFIG).
    */
-  var ID_APP_ID = "ID_APP";
-  var _mCache = new WeakMap();
+  const APP_ID = Constants.CONFIG.APP_ID;
+
+  /** One /config request per model */
+  const _mCache = new WeakMap();
 
   function loadRows(oConfigModel) {
     if (!_mCache.has(oConfigModel)) {
-      var oBinding = oConfigModel.bindList(
-        "/config",
-        null,
-        null,
-        null,
-        { $$groupId: "$direct" }
-      );
-      var pRows = oBinding
+      const pRows = oConfigModel
+        .bindList("/config", null, null, null, { $$groupId: "$direct" })
         .requestContexts(0, Infinity)
         .then(function (aContexts) {
           return aContexts
@@ -25,7 +21,7 @@ sap.ui.define([], function () {
               return oContext.getObject();
             })
             .filter(function (oRow) {
-              return oRow.AppId === ID_APP_ID;
+              return oRow.AppId === APP_ID;
             });
         })
         .catch(function (oError) {
@@ -39,21 +35,21 @@ sap.ui.define([], function () {
 
   return {
     /**
-     * @param {sap.ui.model.odata.v4.ODataModel} oConfigModel The "idConfig" model
-     * @param {string} sParamKey Parameter key, e.g. "RENEW_DAYS"
+     * @param {sap.ui.model.odata.v4.ODataModel} oConfigModel The Constants.MODEL.ID_CONFIG model
+     * @param {string} sParamKey Parameter key, one of Constants.CONFIG
      * @returns {Promise<number>} Rejects if the parameter is missing or not numeric
      */
     getNumber: function (oConfigModel, sParamKey) {
       if (!oConfigModel) {
-        return Promise.reject(new Error("Model 'idConfig' is not available."));
+        return Promise.reject(new Error("Model '" + Constants.MODEL.ID_CONFIG + "' is not available."));
       }
       return loadRows(oConfigModel).then(function (aRows) {
-        var oRow = aRows.find(function (oItem) {
+        const oRow = aRows.find(function (oItem) {
           return oItem.ParamKey === sParamKey;
         });
-        var iValue = oRow ? parseInt(oRow.ParamVal, 10) : NaN;
+        const iValue = oRow ? parseInt(oRow.ParamVal, 10) : NaN;
         if (isNaN(iValue)) {
-          throw new Error(ID_APP_ID + " " + sParamKey + " is missing or not numeric.");
+          throw new Error(APP_ID + " " + sParamKey + " is missing or not numeric.");
         }
         return iValue;
       });

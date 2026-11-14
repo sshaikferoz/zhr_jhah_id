@@ -5,13 +5,13 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/base/Log",
     "com/jhah/zhrjhahsecid/ext/util/UserRole",
-    "com/jhah/zhrjhahsecid/ext/util/IdConfig"
+    "com/jhah/zhrjhahsecid/ext/util/IdConfig",
+    "com/jhah/zhrjhahsecid/ext/util/Constants"
   ],
-  function (ControllerExtension, Fragment, JSONModel, Log, UserRole, IdConfig) {
+  function (ControllerExtension, Fragment, JSONModel, Log, UserRole, IdConfig, Constants) {
     "use strict";
 
-    var LOG_COMPONENT = "com.jhah.zhrjhahsecid.ListReportExt";
-    var MS_PER_DAY = 24 * 60 * 60 * 1000;
+    const LOG_COMPONENT = Constants.LOG_COMPONENT.LIST_REPORT;
 
     /**
      * List Report extension.
@@ -30,7 +30,7 @@ sap.ui.define(
             var oView = this.base.getView();
             var oModel = this.base.getAppComponent().getModel();
 
-            oView.setModel(new JSONModel({ visible: false }), "activeIDModel");
+            oView.setModel(new JSONModel({ visible: false }), Constants.MODEL.ACTIVE_ID);
 
             this._pRendered = new Promise(
               function (resolve) {
@@ -125,7 +125,7 @@ sap.ui.define(
 
           return Promise.all([
             oBinding.requestContexts(0, 1),
-            IdConfig.getNumber(oComponent.getModel("idConfig"), "RENEW_DAYS")
+            IdConfig.getNumber(oComponent.getModel(Constants.MODEL.ID_CONFIG), Constants.CONFIG.RENEW_DAYS)
           ])
             .then(function (aResults) {
               var oContext = aResults[0][0];
@@ -144,7 +144,7 @@ sap.ui.define(
         _buildCardData: function (oData, iRenewDays) {
           var oBundle = this.base
             .getAppComponent()
-            .getModel("i18n")
+            .getModel(Constants.MODEL.I18N)
             .getResourceBundle();
           var oCard = Object.assign({}, oData, {
             visible: true,
@@ -160,7 +160,7 @@ sap.ui.define(
           var oToday = new Date();
           oExpiry.setHours(0, 0, 0, 0);
           oToday.setHours(0, 0, 0, 0);
-          var iDays = Math.round((oExpiry - oToday) / MS_PER_DAY);
+          var iDays = Math.round((oExpiry - oToday) / Constants.MS_PER_DAY);
 
           oCard.DaystoExpire = iDays;
           oCard.IsExpiringSoon = iDays <= iRenewDays;
@@ -196,7 +196,7 @@ sap.ui.define(
           if (!oCardData || oView.isDestroyed()) {
             return;
           }
-          oView.getModel("activeIDModel").setData(oCardData);
+          oView.getModel(Constants.MODEL.ACTIVE_ID).setData(oCardData);
 
           var oPage = oView.findAggregatedObjects(true, function (oControl) {
             return oControl.isA("sap.f.DynamicPage");
