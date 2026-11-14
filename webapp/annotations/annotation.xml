@@ -310,12 +310,24 @@
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsrv_hr_id_app.v0001.grantAccess(com.sap.gateway.srvd.zsrv_hr_id_app.v0001.AppAreaType)"/>
                             <PropertyValue Property="Inline" Bool="true"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                            <!-- inline actions are only disabled by OperationAvailable; hide them per row -->
+                            <Annotation Term="UI.Hidden">
+                                <Not>
+                                    <Path>__OperationControl/grantAccess</Path>
+                                </Not>
+                            </Annotation>
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="{@i18n>rejectAccess}"/>
                             <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsrv_hr_id_app.v0001.rejectAccess(com.sap.gateway.srvd.zsrv_hr_id_app.v0001.AppAreaType)"/>
                             <PropertyValue Property="Inline" Bool="true"/>
                             <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                            <!-- inline actions are only disabled by OperationAvailable; hide them per row -->
+                            <Annotation Term="UI.Hidden">
+                                <Not>
+                                    <Path>__OperationControl/rejectAccess</Path>
+                                </Not>
+                            </Annotation>
                         </Record>
                     </Collection>
                 </Annotation>

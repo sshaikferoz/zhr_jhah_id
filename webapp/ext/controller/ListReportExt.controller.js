@@ -97,8 +97,11 @@ sap.ui.define(
             return aHiddenKeys.indexOf(sKey) === -1;
           });
           if (bSelectedHidden && sFirstAllowed) {
+            var oExtensionAPI = this.base.getExtensionAPI();
             // ExtensionAPI expects the manifest key (views.paths[].key)
-            this.base.getExtensionAPI().setSelectedTab(sFirstAllowed);
+            oExtensionAPI.setSelectedTab(sFirstAllowed);
+            // Switching tabs this way does not load the newly shown table; trigger "Go"
+            oExtensionAPI.refresh();
           }
         },
 

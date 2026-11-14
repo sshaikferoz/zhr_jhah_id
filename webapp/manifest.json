@@ -264,18 +264,14 @@
                         }
                       }
                     },
-                    "AccessAreaGroup": {
-                      "subSections": {
-                        "ExistingAccessInfo": {
-                          "template": "com.jhah.zhrjhahsecid.ext.fragment.ExistingAccessInfo",
-                          "position": {
-                            "placement": "Before",
-                            "anchor": "AreaTab"
-                          },
-                          "title": "{i18n>existingAccessTitle}",
-                          "visible": "{= ${areaInfo>/lockedText} ? true : false }"
-                        }
-                      }
+                    "ExistingAccessInfo": {
+                      "template": "com.jhah.zhrjhahsecid.ext.fragment.ExistingAccessInfo",
+                      "title": "{i18n>existingAccessTitle}",
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "AccessAreaGroup"
+                      },
+                      "visible": "{= ${areaInfo>/lockedText} ? true : false }"
                     }
                   }
                 }
