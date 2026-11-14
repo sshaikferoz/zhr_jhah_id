@@ -128,12 +128,12 @@
                     "key": "AdminTabKey",
                     "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#AdminTab"
                   },
-                                    {
+                  {
                     "key": "EmpTabKey",
                     "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#EmpTab"
                   }
                 ],
-                "showCounts": true
+                "showCounts": false
               },
               "content": {
                 "header": {}
@@ -151,6 +151,37 @@
                     "type": "ResponsiveTable",
                     "personalization": {
                       "column": false
+                    }
+                  }
+                },
+                "@com.sap.vocabularies.UI.v1.LineItem#AdminList": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "MaintainMasterData": {
+                      "type": "Menu",
+                      "text": "Maintain Master Data",
+                      "menu": [
+                        "NavMaintainBlockedID",
+                        "NavMaintainIDLocation",
+                        "NavMaintainAccessArea"
+                      ]
+                    },
+                    "NavMaintainBlockedID": {
+                      "text": "Maintain Blocked IDs",
+                      "icon": "sap-icon://locked",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainBlockedID"
+                    },
+                    "NavMaintainIDLocation": {
+                      "text": "Maintain ID Location",
+                      "icon": "sap-icon://map-2",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainIDLocation"
+                    },
+                    "NavMaintainAccessArea": {
+                      "text": "Maintain Access Areas",
+                      "icon": "sap-icon://building",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainAccessArea"
                     }
                   }
                 }
@@ -173,6 +204,22 @@
                     "CustomEmployeeHeader": {
                       "type": "XMLFragment",
                       "name": "com.jhah.zhrjhahsecid.ext.fragment.EmployeeHeader"
+                    }
+                  }
+                },
+                "body": {
+                  "sections": {
+                    "GeneralTab": {
+                      "subSections": {
+                        "Ackfrag": {
+                          "template": "com.jhah.zhrjhahsecid.ext.fragment.Ackfrag",
+                          "position": {
+                            "placement": "After",
+                            "anchor": "ReqSubSec"
+                          },
+                          "title": "Acknowledgement"
+                        }
+                      }
                     }
                   }
                 }
