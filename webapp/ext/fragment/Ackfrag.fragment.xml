@@ -1,13 +1,12 @@
-
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    
-     <!-- Existing AcknoFlag field -->
-            <CheckBox
-                id="confirmationCheckBox"
-                selected="{NotifySecurity}"
-                text="I confirm that I have notified JHAH Security regarding the lost/damaged ID card"
-                class="confirmationCheckBox" editable="{ui>/isEditable}"/>
-
+    <!-- Custom subsection (manifest "Ackfrag"), bound to the request header -->
+    <CheckBox
+        id="confirmationCheckBox"
+        selected="{NotifySecurity}"
+        text="{i18n>acknowledgementText}"
+        wrapping="true"
+        editable="{ui>/isEditable}"
+        class="confirmationCheckBox"/>
 </core:FragmentDefinition>

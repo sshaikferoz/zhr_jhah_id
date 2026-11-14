@@ -1,15 +1,52 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <SelectDialog
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <!--
+        Opened by ObjectPageExt.openAreaSelectionDialog (manifest action "ActionSelectAreas").
+        The selection is owned by the controller (map of area codes): the list's public
+        selectionChange event updates it, updateFinished re-applies it after every search.
+        Areas held by another request (areaInfo>/locked) stay selected and show their status.
+    -->
+    <Dialog
         id="areaSelectDialog"
-        title="Select Access Areas"
-        multiSelect="true"
-        rememberSelections="true"
-        search=".onAreaSearch"
-        confirm=".onAreaConfirm"
-        items="{
-            path: '/AreaValueHelp',
-            parameters: { $$operationMode: 'Server' }
-        }">
-        <StandardListItem id="_IDGenStandardListItem" title="{AccessArea}" />
-    </SelectDialog>
+        title="{i18n>selectAccessAreasTitle}"
+        contentWidth="30rem"
+        contentHeight="60%"
+        resizable="true"
+        draggable="true">
+        <subHeader>
+            <Toolbar>
+                <SearchField
+                    id="areaSearchField"
+                    width="100%"
+                    liveChange=".onAreaSearch"
+                    search=".onAreaSearch"/>
+            </Toolbar>
+        </subHeader>
+        <List
+            id="areaList"
+            mode="MultiSelect"
+            growing="false"
+            includeItemInSelection="true"
+            selectionChange=".onAreaSelectionChange"
+            updateFinished=".applyAreaSelection"
+            items="{
+                path: '/AreaValueHelp',
+                parameters: { $select: 'AreaCode,AccessArea' },
+                sorter: { path: 'AccessArea' },
+                suspended: true
+            }">
+            <StandardListItem
+                title="{AccessArea}"
+                info="{ parts: ['AreaCode', 'areaInfo>/locked'], formatter: '.formatLockInfo' }"
+                infoState="{ parts: ['AreaCode', 'areaInfo>/locked'], formatter: '.formatLockState' }"
+                tooltip="{ parts: ['AreaCode', 'areaInfo>/locked'], formatter: '.formatLockTooltip' }"/>
+        </List>
+        <beginButton>
+            <Button text="{i18n>areaDialogApply}" type="Emphasized" press=".onAreaConfirm"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>areaDialogCancel}" press=".onAreaCancel"/>
+        </endButton>
+    </Dialog>
 </core:FragmentDefinition>

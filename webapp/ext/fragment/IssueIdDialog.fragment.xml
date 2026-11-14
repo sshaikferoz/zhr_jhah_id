@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    <!--
+        "Issue ID Card" dialog (controller: ext/util/IssueIdDialog.js, model "issueId").
+        Replaces the generic action parameter dialog so that it can show the contract end date
+        and ask for an expiry date only when the validity is "OT".
+    -->
+    <Dialog
+        title="{i18n>issueIdTitle}"
+        contentWidth="32rem"
+        busyIndicatorDelay="0"
+        core:require="{ formatter: 'com/jhah/zhrjhahsecid/ext/util/formatter' }">
+        <form:Form editable="true">
+            <form:layout>
+                <form:ColumnLayout columnsM="1" columnsL="1" columnsXL="1"/>
+            </form:layout>
+            <form:formContainers>
+                <form:FormContainer>
+                    <form:formElements>
+                        <form:FormElement label="{i18n>issueIdContractEnd}">
+                            <form:fields>
+                                <Text text="{ path: 'issueId>/contractEnd', formatter: 'formatter.yyyymmddToDisplay' }"/>
+                            </form:fields>
+                        </form:FormElement>
+                        <form:FormElement>
+                            <form:label>
+                                <Label text="{i18n>issueIdValidity}" required="true"/>
+                            </form:label>
+                            <form:fields>
+                                <Select
+                                    forceSelection="false"
+                                    selectedKey="{issueId>/validity}"
+                                    valueState="{issueId>/validityState}"
+                                    change=".onValidityChange"
+                                    items="{
+                                        path: '/validityPeriod',
+                                        sorter: { path: 'SortRank' },
+                                        templateShareable: false
+                                    }">
+                                    <core:Item key="{ValidityValue}" text="{ValidityDesc}"/>
+                                </Select>
+                            </form:fields>
+                        </form:FormElement>
+                        <form:FormElement visible="{issueId>/showExpiry}">
+                            <form:label>
+                                <Label text="{i18n>issueIdExpiryDate}" required="true"/>
+                            </form:label>
+                            <form:fields>
+                                <DatePicker
+                                    value="{issueId>/expiryDate}"
+                                    valueFormat="yyyy-MM-dd"
+                                    displayFormat="medium"
+                                    minDate="{issueId>/minExpiry}"
+                                    valueState="{issueId>/expiryState}"/>
+                            </form:fields>
+                        </form:FormElement>
+                        <form:FormElement label="{i18n>issueIdRemarks}">
+                            <form:fields>
+                                <TextArea value="{issueId>/remarks}" rows="3" maxLength="255" width="100%"/>
+                            </form:fields>
+                        </form:FormElement>
+                    </form:formElements>
+                </form:FormContainer>
+            </form:formContainers>
+        </form:Form>
+        <beginButton>
+            <Button text="{i18n>issueIdSubmit}" type="Emphasized" press=".onSubmit"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>areaDialogCancel}" press=".onCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

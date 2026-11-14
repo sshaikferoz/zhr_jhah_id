@@ -2,11 +2,23 @@
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
     </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
     <edmx:Reference Uri="/sap/opu/odata4/sap/zsrv_hr_id_o4/srvd/sap/zsrv_hr_id_app/0001/$metadata">
         <edmx:Include Namespace="com.sap.gateway.srvd.zsrv_hr_id_app.v0001" Alias="SAP__self"/>
     </edmx:Reference>
     <edmx:DataServices>
+        <!--
+            Local (UI-layer) annotations. A term/qualifier defined here replaces the backend one.
+            Keep this file small: anything that is business logic (authorization, feature control,
+            validation) belongs in the RAP backend - see docs/backend-requirements.md.
+        -->
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+
+            <!-- ======================================================
+                 Request header
+                 ====================================================== -->
             <Annotations Target="SAP__self.HeaderType">
                 <Annotation Term="UI.FieldGroup" Qualifier="FG_SECURITY">
                     <Record>
@@ -15,6 +27,7 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="SecFileContent"/>
                                 </Record>
+                                <!-- The acknowledgement checkbox is rendered by the custom subsection "Ackfrag" -->
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="NotifySecurity"/>
                                     <PropertyValue Property="Label" String="Acknowledgement"/>
@@ -24,6 +37,134 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+
+                <!-- "Show Only Action Items" is not a free filter any more: the Security Admin tab
+                     applies it through its SelectionVariant (below), the other tabs never need it. -->
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>ReqType</PropertyPath>
+                        <PropertyPath>RequestStatus</PropertyPath>
+                        <PropertyPath>CreatedDate</PropertyPath>
+                    </Collection>
+                </Annotation>
+
+                <!-- Security Admin tab: backend variant + "action items only" -->
+                <Annotation Term="UI.SelectionVariant" Qualifier="AdminFilter">
+                    <Record>
+                        <PropertyValue Property="Text" String="Security Admin View"/>
+                        <PropertyValue Property="SelectOptions">
+                            <Collection>
+                                <Record Type="UI.SelectOptionType">
+                                    <PropertyValue Property="PropertyName" PropertyPath="isCreate"/>
+                                    <PropertyValue Property="Ranges">
+                                        <Collection>
+                                            <Record Type="UI.SelectionRangeType">
+                                                <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I"/>
+                                                <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ"/>
+                                                <PropertyValue Property="Low" Bool="false"/>
+                                            </Record>
+                                        </Collection>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.SelectOptionType">
+                                    <PropertyValue Property="PropertyName" PropertyPath="IsMyRequest"/>
+                                    <PropertyValue Property="Ranges">
+                                        <Collection>
+                                            <Record Type="UI.SelectionRangeType">
+                                                <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/E"/>
+                                                <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ"/>
+                                                <PropertyValue Property="Low" Bool="true"/>
+                                            </Record>
+                                        </Collection>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.SelectOptionType">
+                                    <PropertyValue Property="PropertyName" PropertyPath="IsActionItem"/>
+                                    <PropertyValue Property="Ranges">
+                                        <Collection>
+                                            <Record Type="UI.SelectionRangeType">
+                                                <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I"/>
+                                                <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ"/>
+                                                <PropertyValue Property="Low" Bool="true"/>
+                                            </Record>
+                                        </Collection>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <!-- Object Page header actions.
+                     - "Issue ID Card" is a manifest custom action (own dialog: contract expiry,
+                       expiry date only for validity "OT"), so it is not listed here.
+                     - The backend also lists Schedule / Reschedule / Reject Appointment / Mark No-Show,
+                       but the service does not expose those actions ("Action not found"). -->
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Cancel Request"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsrv_hr_id_app.v0001.CancelRequest(com.sap.gateway.srvd.zsrv_hr_id_app.v0001.HeaderType)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <!-- Security Admin table: backend columns without the unavailable appointment actions;
+                     "Issue ID Card" is a manifest custom action on this table. -->
+                <Annotation Term="UI.LineItem" Qualifier="AdminList">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Request Number"/>
+                            <PropertyValue Property="Value" Path="RequestId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Request type"/>
+                            <PropertyValue Property="Value" Path="ReqType"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Full Name"/>
+                            <PropertyValue Property="Value" Path="FullName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Payroll Number"/>
+                            <PropertyValue Property="Value" Path="PayrollNum"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Badge Number"/>
+                            <PropertyValue Property="Value" Path="BadgeNum"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Issue Date"/>
+                            <PropertyValue Property="Value" Path="IssueDate"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Job Title"/>
+                            <PropertyValue Property="Value" Path="JobTitle"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Request Status"/>
+                            <PropertyValue Property="Value" Path="RequestStatus"/>
+                            <PropertyValue Property="Criticality" Path="RequestStatusCrit"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Security Document"/>
+                            <PropertyValue Property="Value" Path="SecFileName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="File Type"/>
+                            <PropertyValue Property="Value" Path="SecFileMimeType"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
                 <Annotation Term="UI.Facets">
                     <Collection>
                         <Record Type="UI.CollectionFacet">
@@ -127,6 +268,69 @@
                         </Record>
                     </Collection>
                 </Annotation>
+            </Annotations>
+
+            <!-- Required fields (replaces the red asterisks injected into the DOM).
+                 The backend must still validate them on save. -->
+            <Annotations Target="SAP__self.HeaderType/LocationID">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HeaderType/Comments">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+
+            <!-- Cancel Request asks for confirmation (text: fe.properties) -->
+            <Annotations Target="SAP__self.CancelRequest(SAP__self.HeaderType)">
+                <Annotation Term="Common.IsActionCritical" Bool="true"/>
+            </Annotations>
+
+            <!-- ======================================================
+                 Requested access areas (Header/_items)
+                 ====================================================== -->
+            <!-- Grant / Reject as inline row actions. Visibility comes from the backend
+                 (Core.OperationAvailable -> __OperationControl of each AppArea row). -->
+            <Annotations Target="SAP__self.AppAreaType">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AreaDesc"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AreaName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AreaCode"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="AreaStatus"/>
+                            <PropertyValue Property="Criticality" Path="ItemCriticality"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="{@i18n>grantAccess}"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsrv_hr_id_app.v0001.grantAccess(com.sap.gateway.srvd.zsrv_hr_id_app.v0001.AppAreaType)"/>
+                            <PropertyValue Property="Inline" Bool="true"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="{@i18n>rejectAccess}"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zsrv_hr_id_app.v0001.rejectAccess(com.sap.gateway.srvd.zsrv_hr_id_app.v0001.AppAreaType)"/>
+                            <PropertyValue Property="Inline" Bool="true"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- Reject reason: FE renders its own parameter dialog for this -->
+            <Annotations Target="SAP__self.rejectAccess(SAP__self.AppAreaType)/justification">
+                <Annotation Term="Common.Label" String="{@i18n>rejectReason}"/>
+                <Annotation Term="UI.MultiLineText"/>
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+
+            <!-- Areas are added only through "Select Access Areas", never as blank rows -->
+            <Annotations Target="SAP__self.Container/AppArea">
+                <Annotation Term="UI.CreateHidden"/>
             </Annotations>
         </Schema>
     </edmx:DataServices>

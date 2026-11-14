@@ -33,6 +33,13 @@
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "4.0"
         }
+      },
+      "idConfigService": {
+        "uri": "/sap/opu/odata4/sap/zsb_jhahsec_auth_o4/srvd_a2x/sap/zsrv_hr_jhahsec_auth_info/0001/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -59,6 +66,7 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
+        "sap.ui.layout": {},
         "sap.fe.templates": {}
       }
     },
@@ -80,6 +88,14 @@
           "operationMode": "Server",
           "autoExpandSelect": true,
           "earlyRequests": true
+        }
+      },
+      "idConfig": {
+        "dataSource": "idConfigService",
+        "preload": false,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true
         }
       },
       "@i18n": {
@@ -118,6 +134,7 @@
             "settings": {
               "contextPath": "/Header",
               "variantManagement": "Page",
+              "enhanceI18n": "i18n/fe.properties",
               "views": {
                 "paths": [
                   {
@@ -135,9 +152,6 @@
                 ],
                 "showCounts": false
               },
-              "content": {
-                "header": {}
-              },
               "navigation": {
                 "Header": {
                   "detail": {
@@ -149,19 +163,36 @@
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable",
-                    "personalization": {
-                      "column": false
-                    }
+                    "personalization": false
+                  }
+                },
+                "@com.sap.vocabularies.UI.v1.LineItem#EmpList": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "personalization": false
+                  }
+                },
+                "@com.sap.vocabularies.UI.v1.LineItem#HRList": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "personalization": false
                   }
                 },
                 "@com.sap.vocabularies.UI.v1.LineItem#AdminList": {
                   "tableSettings": {
-                    "type": "ResponsiveTable"
+                    "type": "ResponsiveTable",
+                    "personalization": false
                   },
                   "actions": {
+                    "IssueIdCard": {
+                      "text": "{i18n>issueIdTitle}",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.IssueIdAction.onIssueIdFromList",
+                      "requiresSelection": true,
+                      "enabled": "com.jhah.zhrjhahsecid.ext.controller.IssueIdAction.isSingleSelection"
+                    },
                     "MaintainMasterData": {
                       "type": "Menu",
-                      "text": "Maintain Master Data",
+                      "text": "{i18n>maintainMasterData}",
                       "menu": [
                         "NavMaintainBlockedID",
                         "NavMaintainIDLocation",
@@ -169,17 +200,17 @@
                       ]
                     },
                     "NavMaintainBlockedID": {
-                      "text": "Maintain Blocked IDs",
+                      "text": "{i18n>maintainBlockedIds}",
                       "icon": "sap-icon://locked",
                       "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainBlockedID"
                     },
                     "NavMaintainIDLocation": {
-                      "text": "Maintain ID Location",
+                      "text": "{i18n>maintainIdLocation}",
                       "icon": "sap-icon://map-2",
                       "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainIDLocation"
                     },
                     "NavMaintainAccessArea": {
-                      "text": "Maintain Access Areas",
+                      "text": "{i18n>maintainAccessAreas}",
                       "icon": "sap-icon://building",
                       "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainAccessArea"
                     }
@@ -198,8 +229,20 @@
             "settings": {
               "editableHeaderContent": false,
               "contextPath": "/Header",
+              "enhanceI18n": "i18n/fe.properties",
               "content": {
                 "header": {
+                  "actions": {
+                    "IssueIdCard": {
+                      "text": "{i18n>issueIdTitle}",
+                      "press": "com.jhah.zhrjhahsecid.ext.controller.IssueIdAction.onIssueIdFromObjectPage",
+                      "visible": "{= ${__OperationControl/IssueID} === true && ${IsActiveEntity} === true }",
+                      "position": {
+                        "placement": "Before",
+                        "anchor": "DataFieldForAction::com.sap.gateway.srvd.zsrv_hr_id_app.v0001.CancelRequest"
+                      }
+                    }
+                  },
                   "facets": {
                     "CustomEmployeeHeader": {
                       "type": "XMLFragment",
@@ -217,7 +260,20 @@
                             "placement": "After",
                             "anchor": "ReqSubSec"
                           },
-                          "title": "Acknowledgement"
+                          "title": "{i18n>acknowledgementTitle}"
+                        }
+                      }
+                    },
+                    "AccessAreaGroup": {
+                      "subSections": {
+                        "ExistingAccessInfo": {
+                          "template": "com.jhah.zhrjhahsecid.ext.fragment.ExistingAccessInfo",
+                          "position": {
+                            "placement": "Before",
+                            "anchor": "AreaTab"
+                          },
+                          "title": "{i18n>existingAccessTitle}",
+                          "visible": "{= ${areaInfo>/lockedText} ? true : false }"
                         }
                       }
                     }
@@ -227,17 +283,21 @@
               "controlConfiguration": {
                 "_items/@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "creationMode": {
-                      "name": "Inline"
-                    }
+                    "type": "ResponsiveTable",
+                    "personalization": false
                   },
                   "actions": {
                     "ActionSelectAreas": {
-                      "text": "Select Access Areas",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt.openAreaSelectionDialog",
+                      "text": "{i18n>selectAccessAreas}",
+                      "press": ".extension.com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt.openAreaSelectionDialog",
                       "requiresSelection": false,
-                      "visible": "{= ${ui>/editMode} === 'Editable' }"
+                      "visible": "{ui>/isEditable}"
                     }
+                  }
+                },
+                "_ExistingAreas/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "personalization": false
                   }
                 }
               }
@@ -250,7 +310,7 @@
       "extensions": {
         "sap.ui.controllerExtensions": {
           "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid::headerList": {
-            "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
+            "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ListReportExt"
           },
           "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid::headerObjectPage": {
             "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"

@@ -1,29 +1,31 @@
-sap.ui.define([
-    "sap/m/MessageToast"
-], function (MessageToast) {
-    "use strict";
+sap.ui.define(["sap/m/MessageToast", "sap/base/Log"], function (MessageToast, Log) {
+  "use strict";
 
-    function navigate(sSemanticObject) {
-        var oContainer = sap.ushell && sap.ushell.Container;
-        if (!oContainer) {
-            MessageToast.show("Cross-App Navigation is not supported in this environment."); //for BAS preview
-            return;
-        }
-        oContainer.getServiceAsync("Navigation").then(function (oNavigation) {
-            oNavigation.navigate({
-                target: {
-                    semanticObject: sSemanticObject,
-                    action: "manage"
-                }
-            });
-        }).catch(function () {
-            MessageToast.show("Navigation to " + sSemanticObject + " failed.");
-        });
+  /**
+   * Handlers for the "Maintain Master Data" menu (manifest.json, AdminList table actions).
+   * SAP Fiori elements calls manifest action handlers with "this" = the page's ExtensionAPI.
+   */
+  function navigate(oExtensionAPI, sSemanticObject) {
+    var oBundle = oExtensionAPI.getModel("i18n").getResourceBundle();
+    return Promise.resolve()
+      .then(function () {
+        return oExtensionAPI.getIntentBasedNavigation().navigate(sSemanticObject, "manage");
+      })
+      .catch(function (oError) {
+        Log.warning("Navigation to " + sSemanticObject + " failed", oError);
+        MessageToast.show(oBundle.getText("navigationFailed", [sSemanticObject]));
+      });
+  }
+
+  return {
+    navigateToMaintainBlockedID: function () {
+      return navigate(this, "maintblkid");
+    },
+    navigateToMaintainIDLocation: function () {
+      return navigate(this, "maintidloc");
+    },
+    navigateToMaintainAccessArea: function () {
+      return navigate(this, "maintidaccessarea");
     }
-
-    return {
-        navigateToMaintainBlockedID: function () { navigate("maintblkid"); },
-        navigateToMaintainIDLocation: function () { navigate("maintidloc"); },
-        navigateToMaintainAccessArea: function () { navigate("maintidaccessarea"); }
-    };
+  };
 });
