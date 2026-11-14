@@ -38,6 +38,8 @@
         "uri": "/sap/opu/odata4/sap/zsb_jhahsec_auth_o4/srvd_a2x/sap/zsrv_hr_jhahsec_auth_info/0001/",
         "type": "OData",
         "settings": {
+          "annotations": [],
+          "localUri": "localService/idConfigService/metadata.xml",
           "odataVersion": "4.0"
         }
       }
@@ -101,6 +103,15 @@
       "@i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "uri": "i18n/i18n.properties"
+      },
+      "idConfigService": {
+        "dataSource": "idConfigService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
       }
     },
     "resources": {

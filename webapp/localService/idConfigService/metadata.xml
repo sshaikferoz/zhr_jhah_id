@@ -1,0 +1,1537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="SAP__measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="SAP__capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="SAP__aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="SAP__validation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="SAP__UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="SAP__HTML5"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SESSION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="SAP__session"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HIERARCHY',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Hierarchy.v1" Alias="SAP__hierarchy"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001" Alias="SAP__self">
+            <Annotation Term="SAP__core.SchemaVersion" String="1.0.0"/>
+            <EntityType Name="configType">
+                <Key>
+                    <PropertyRef Name="AppId"/>
+                    <PropertyRef Name="ParamKey"/>
+                    <PropertyRef Name="Seqnr"/>
+                </Key>
+                <Property Name="AppId" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ParamKey" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="Seqnr" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="ParamVal" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="ParamDesc" Type="Edm.String" Nullable="false" MaxLength="120"/>
+                <Property Name="ValidFrom" Type="Edm.Date"/>
+                <Property Name="ValidTo" Type="Edm.Date"/>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+            </EntityType>
+            <EntityType Name="HRAuthInfoType">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                </Key>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="Usrid" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="EMail" Type="Edm.String" Nullable="false" MaxLength="241"/>
+                <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Organization" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="OrgText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CsuiteOrg" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="DepartmentOrg" Type="Edm.String" Nullable="false" MaxLength="45"/>
+                <Property Name="DepartmentText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CSuiteName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="UserPosition" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="PostionText" Type="Edm.String" Nullable="false" MaxLength="25"/>
+                <Property Name="ArabicName" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="DOB" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Nationality" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="NationalityDesc" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="GovernmentID" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="BloodGroup" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Gender" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="BadgeNumber" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="Phone" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="ExpiryDate" Type="Edm.Date"/>
+                <Property Name="JobRoleType" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="JobRoleTypeAR" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="PhotoContent" Type="Edm.Stream"/>
+                <Property Name="PhotoMimeType" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="QRval" Type="Edm.String" Nullable="false" MaxLength="265"/>
+                <Property Name="timestamp" Type="Edm.Decimal" Nullable="false" Precision="15"/>
+                <Property Name="RenewEligible" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="LostEligible" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="AccessUpdateEligible" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="RenewMessage" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="ReplaceDamagedEligible" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="ReplaceMessage" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="LostMessage" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="AccessUpdateMessage" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="EnableAdditionalJust" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="AllowStickerCreate" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="AllowStickerCreateMsg" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="UnitText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="ContractEnddate" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="VARAdmin" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="VARAuthorized" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="StickerAdmin" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="StickerAuthorized" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="TVSAdmin" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="TVSAuthorized" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="IDAdmin" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="IDHR" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="IDAuthorized" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <NavigationProperty Name="_area" Type="Collection(com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.areasType)"/>
+                <NavigationProperty Name="_id" Type="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.activeIDandHRType"/>
+                <NavigationProperty Name="_sticker" Type="Collection(com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.stickerType)"/>
+            </EntityType>
+            <EntityType Name="HRInfoType">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                </Key>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="Usrid" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="EMail" Type="Edm.String" Nullable="false" MaxLength="241"/>
+                <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Organization" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="OrgText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CsuiteOrg" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="DepartmentOrg" Type="Edm.String" Nullable="false" MaxLength="45"/>
+                <Property Name="DepartmentText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CSuiteName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="UserPosition" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="PostionText" Type="Edm.String" Nullable="false" MaxLength="25"/>
+                <Property Name="ArabicName" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="DOB" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Nationality" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="NationalityDesc" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="GovernmentID" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="BloodGroup" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Gender" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="BadgeNumber" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="Phone" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="ExpiryDate" Type="Edm.Date"/>
+                <Property Name="JobRoleType" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="PhotoContent" Type="Edm.Binary" Nullable="false"/>
+                <Property Name="PhotoMimeType" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="QRval" Type="Edm.String" Nullable="false" MaxLength="265"/>
+                <Property Name="timestamp" Type="Edm.Decimal" Nullable="false" Precision="15"/>
+                <Property Name="Unit" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="UnitText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="ContractEnddate" Type="Edm.String" Nullable="false" MaxLength="10"/>
+            </EntityType>
+            <EntityType Name="foryourattentionType">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Dates" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Severity" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Route" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Params" Type="Edm.String" Nullable="false"/>
+                <Property Name="IsRead" Type="Edm.Boolean" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="idType">
+                <Key>
+                    <PropertyRef Name="ReqUuid"/>
+                </Key>
+                <Property Name="ReqUuid" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="PayrollNum" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="IssueDate" Type="Edm.Date"/>
+                <Property Name="ExpiryDate" Type="Edm.Date"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="RequestId" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="name" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="IdNumber" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="userid" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="DaystoExpire" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="PhotoContent" Type="Edm.Binary" Nullable="false"/>
+                <Property Name="PhotoMimeType" Type="Edm.String" Nullable="false" MaxLength="128"/>
+            </EntityType>
+            <EntityType Name="stickerType">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                    <PropertyRef Name="StickerNumber"/>
+                </Key>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="StickerNumber" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="PlateType" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="StkReqId" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="Manufacturer" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Color" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="ManufacturerDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="ColorDesc" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="PlateNum1Desc" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="PlateNum1" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="PlateNum2Desc" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="PlateNum2" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="PlateNum3Desc" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="PlateNum3" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="platecondensed" Type="Edm.String" Nullable="false" MaxLength="13"/>
+                <Property Name="PlateNum" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="ExpireDate" Type="Edm.Date"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="QRValue" Type="Edm.String" Nullable="false" MaxLength="300"/>
+            </EntityType>
+            <EntityType Name="areasType">
+                <Key>
+                    <PropertyRef Name="PayrollNum"/>
+                    <PropertyRef Name="ReqUuid"/>
+                    <PropertyRef Name="AreaCode"/>
+                </Key>
+                <Property Name="PayrollNum" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="ReqUuid" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="AreaCode" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="RequestId" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="AreaDesc" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="StatusCrit" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="StatusValueState" Type="Edm.String" Nullable="false" MaxLength="7"/>
+                <Property Name="StatusTooltip" Type="Edm.String" Nullable="false" MaxLength="62"/>
+                <Property Name="StatusDesc" Type="Edm.String" Nullable="false" MaxLength="12"/>
+            </EntityType>
+            <EntityType Name="notificationType">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Dates" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Severity" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Route" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Params" Type="Edm.String" Nullable="false"/>
+                <Property Name="IsRead" Type="Edm.Boolean" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="authInfoType">
+                <Key>
+                    <PropertyRef Name="USERID"/>
+                </Key>
+                <Property Name="USERID" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="VAR_ROLE" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="TVS_ROLE" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="STK_ROLE" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="ID_ROLE" Type="Edm.String" Nullable="false" MaxLength="8"/>
+            </EntityType>
+            <EntityType Name="activeIDandHRType">
+                <Key>
+                    <PropertyRef Name="ReqUuid"/>
+                </Key>
+                <Property Name="ReqUuid" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="PayrollNum" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="IssueDate" Type="Edm.Date"/>
+                <Property Name="ExpiryDate" Type="Edm.Date"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="RequestId" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="IdNumber" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="userid" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="DaystoExpire" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Location" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="EMail" Type="Edm.String" Nullable="false" MaxLength="241"/>
+                <Property Name="Organization" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="OrgText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CsuiteOrg" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="DepartmentOrg" Type="Edm.String" Nullable="false" MaxLength="45"/>
+                <Property Name="DepartmentText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CSuiteName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="UserPosition" Type="Edm.String" Nullable="false" MaxLength="8"/>
+                <Property Name="PostionText" Type="Edm.String" Nullable="false" MaxLength="25"/>
+                <Property Name="JobTitle" Type="Edm.String" Nullable="false" MaxLength="25"/>
+                <Property Name="ArabicName" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="DOB" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Nationality" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="NationalityDesc" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="NationalID" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="Iqama" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="GovernmentID" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="GovtId" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="BloodGroup" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="BloodType" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Gender" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="GenderKey" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="BadgeNumber" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="BadgeNum" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="WorkPhone" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="HomePhone" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="BusinessMobile" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="CellPhone" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="Phone" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="PhoneNum" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="JobTypeKey" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="JobRoleType" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="JobRoleTypeAR" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="PhotoContent" Type="Edm.Binary" Nullable="false"/>
+                <Property Name="PhotoMimeType" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="QRval" Type="Edm.String" Nullable="false" MaxLength="265"/>
+                <Property Name="timestamp" Type="Edm.Decimal" Nullable="false" Precision="15"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="activeIDandHR" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.activeIDandHRType"/>
+                <EntitySet Name="areas" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.areasType"/>
+                <EntitySet Name="authInfo" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.authInfoType"/>
+                <EntitySet Name="config" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.configType"/>
+                <EntitySet Name="foryourattention" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.foryourattentionType"/>
+                <EntitySet Name="HRAuthInfo" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.HRAuthInfoType">
+                    <NavigationPropertyBinding Path="_area" Target="areas"/>
+                    <NavigationPropertyBinding Path="_id" Target="activeIDandHR"/>
+                    <NavigationPropertyBinding Path="_sticker" Target="sticker"/>
+                </EntitySet>
+                <EntitySet Name="HRInfo" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.HRInfoType"/>
+                <EntitySet Name="id" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.idType"/>
+                <EntitySet Name="notification" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.notificationType"/>
+                <EntitySet Name="sticker" EntityType="com.sap.gateway.srvd_a2x.zsrv_hr_jhahsec_auth_info.v0001.stickerType"/>
+            </EntityContainer>
+            <Annotations Target="SAP__self.configType/Seqnr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.configType">
+                <Annotation Term="SAP__common.Label" String="Seucrity apps business rules and config"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/config">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Pernr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Usrid">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/CompanyCode">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Company Code"/>
+                <Annotation Term="SAP__common.Heading" String="CoCd"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Location">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Personnel area"/>
+                <Annotation Term="SAP__common.Heading" String="PA"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Personnel Area"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/EMail">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Long ID/Number"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication: Long Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Organization">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Organizational unit"/>
+                <Annotation Term="SAP__common.Heading" String="Org.unit"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Organizational Unit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/CsuiteOrg">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Object ID"/>
+                <Annotation Term="SAP__common.Heading" String="ObjectID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/DepartmentOrg">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="ID rel.object"/>
+                <Annotation Term="SAP__common.Heading" String="ID of related object"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ID of Related Object"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/UserPosition">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/ArabicName">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Last name First name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Employee's Name (Sortable by LAST NAME FIRST NAME)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Nationality">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Nationality"/>
+                <Annotation Term="SAP__common.Heading" String="Nat"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/GovernmentID">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/BloodGroup">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Blood Group"/>
+                <Annotation Term="SAP__common.Heading" String="Blood Grp"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/BadgeNumber">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Phone">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/PhotoContent">
+                <Annotation Term="SAP__core.MediaType" Path="PhotoMimeType"/>
+                <Annotation Term="SAP__common.Label" String="Photo Content"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/PhotoMimeType">
+                <Annotation Term="SAP__core.IsMediaType"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Photo Mime Type"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Unit">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Object ID"/>
+                <Annotation Term="SAP__common.Heading" String="ObjectID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/VARAdmin">
+                <Annotation Term="SAP__common.Label" String="VAR Admin"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/VARAuthorized">
+                <Annotation Term="SAP__common.Label" String="VAR Authorized"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/StickerAdmin">
+                <Annotation Term="SAP__common.Label" String="Sticker Admin"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/StickerAuthorized">
+                <Annotation Term="SAP__common.Label" String="Sticker Authorized"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/TVSAdmin">
+                <Annotation Term="SAP__common.Label" String="TVS Admin"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/TVSAuthorized">
+                <Annotation Term="SAP__common.Label" String="TVS Authorized"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/IDAdmin">
+                <Annotation Term="SAP__common.Label" String="ID Admin"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/IDHR">
+                <Annotation Term="SAP__common.Label" String="ID HR"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/IDAuthorized">
+                <Annotation Term="SAP__common.Label" String="ID Authorized"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType">
+                <Annotation Term="SAP__common.Label" String="HR: Employee Details Projection"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/HRAuthInfo">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="true"/>
+                        <PropertyValue Property="UnsupportedExpressions" EnumMember="SAP__capabilities.SearchExpressions/AND SAP__capabilities.SearchExpressions/OR SAP__capabilities.SearchExpressions/NOT SAP__capabilities.SearchExpressions/group SAP__capabilities.SearchExpressions/phrase"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>RenewEligible</PropertyPath>
+                                <PropertyPath>LostEligible</PropertyPath>
+                                <PropertyPath>AccessUpdateEligible</PropertyPath>
+                                <PropertyPath>RenewMessage</PropertyPath>
+                                <PropertyPath>ReplaceDamagedEligible</PropertyPath>
+                                <PropertyPath>ReplaceMessage</PropertyPath>
+                                <PropertyPath>LostMessage</PropertyPath>
+                                <PropertyPath>AccessUpdateMessage</PropertyPath>
+                                <PropertyPath>EnableAdditionalJust</PropertyPath>
+                                <PropertyPath>AllowStickerCreate</PropertyPath>
+                                <PropertyPath>AllowStickerCreateMsg</PropertyPath>
+                                <PropertyPath>Unit</PropertyPath>
+                                <PropertyPath>UnitText</PropertyPath>
+                                <PropertyPath>ContractEnddate</PropertyPath>
+                                <PropertyPath>VARAdmin</PropertyPath>
+                                <PropertyPath>VARAuthorized</PropertyPath>
+                                <PropertyPath>StickerAdmin</PropertyPath>
+                                <PropertyPath>StickerAuthorized</PropertyPath>
+                                <PropertyPath>TVSAdmin</PropertyPath>
+                                <PropertyPath>TVSAuthorized</PropertyPath>
+                                <PropertyPath>IDAdmin</PropertyPath>
+                                <PropertyPath>IDHR</PropertyPath>
+                                <PropertyPath>IDAuthorized</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>RenewEligible</PropertyPath>
+                                <PropertyPath>LostEligible</PropertyPath>
+                                <PropertyPath>AccessUpdateEligible</PropertyPath>
+                                <PropertyPath>RenewMessage</PropertyPath>
+                                <PropertyPath>ReplaceDamagedEligible</PropertyPath>
+                                <PropertyPath>ReplaceMessage</PropertyPath>
+                                <PropertyPath>LostMessage</PropertyPath>
+                                <PropertyPath>AccessUpdateMessage</PropertyPath>
+                                <PropertyPath>EnableAdditionalJust</PropertyPath>
+                                <PropertyPath>AllowStickerCreate</PropertyPath>
+                                <PropertyPath>AllowStickerCreateMsg</PropertyPath>
+                                <PropertyPath>Unit</PropertyPath>
+                                <PropertyPath>UnitText</PropertyPath>
+                                <PropertyPath>ContractEnddate</PropertyPath>
+                                <PropertyPath>VARAdmin</PropertyPath>
+                                <PropertyPath>VARAuthorized</PropertyPath>
+                                <PropertyPath>StickerAdmin</PropertyPath>
+                                <PropertyPath>StickerAuthorized</PropertyPath>
+                                <PropertyPath>TVSAdmin</PropertyPath>
+                                <PropertyPath>TVSAuthorized</PropertyPath>
+                                <PropertyPath>IDAdmin</PropertyPath>
+                                <PropertyPath>IDHR</PropertyPath>
+                                <PropertyPath>IDAuthorized</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Pernr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Usrid">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/CompanyCode">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Company Code"/>
+                <Annotation Term="SAP__common.Heading" String="CoCd"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Location">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Personnel area"/>
+                <Annotation Term="SAP__common.Heading" String="PA"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Personnel Area"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/EMail">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Long ID/Number"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication: Long Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Organization">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Organizational unit"/>
+                <Annotation Term="SAP__common.Heading" String="Org.unit"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Organizational Unit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/CsuiteOrg">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Object ID"/>
+                <Annotation Term="SAP__common.Heading" String="ObjectID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/DepartmentOrg">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="ID rel.object"/>
+                <Annotation Term="SAP__common.Heading" String="ID of related object"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ID of Related Object"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/UserPosition">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/ArabicName">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Last name First name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Employee's Name (Sortable by LAST NAME FIRST NAME)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Nationality">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Nationality"/>
+                <Annotation Term="SAP__common.Heading" String="Nat"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/GovernmentID">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/BloodGroup">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Blood Group"/>
+                <Annotation Term="SAP__common.Heading" String="Blood Grp"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/BadgeNumber">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Phone">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/PhotoMimeType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Photo Mime Type"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Unit">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Object ID"/>
+                <Annotation Term="SAP__common.Heading" String="ObjectID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType">
+                <Annotation Term="SAP__common.Label" String="HR: Employee Details Projection"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/HRInfo">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="true"/>
+                        <PropertyValue Property="UnsupportedExpressions" EnumMember="SAP__capabilities.SearchExpressions/AND SAP__capabilities.SearchExpressions/OR SAP__capabilities.SearchExpressions/NOT SAP__capabilities.SearchExpressions/group SAP__capabilities.SearchExpressions/phrase"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>Unit</PropertyPath>
+                                <PropertyPath>UnitText</PropertyPath>
+                                <PropertyPath>ContractEnddate</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>Unit</PropertyPath>
+                                <PropertyPath>UnitText</PropertyPath>
+                                <PropertyPath>ContractEnddate</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.foryourattentionType">
+                <Annotation Term="SAP__common.Label" String="Custom Entity for for your attention"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/foryourattention">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="Filterable" Bool="true"/>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Params"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SearchExpression"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>Params</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/PayrollNum">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/RequestId">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="ID Request Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/Pernr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/IdNumber">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/userid">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Character Field of Length 12"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/PhotoMimeType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Photo Mime Type"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType">
+                <Annotation Term="SAP__common.Label" String="ID APP: Active ID Card of the user"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/id">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/Pernr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Plate Type"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Vehicle Plate Type"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/Manufacturer">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Manufacturer"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/Color">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Color"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateNum1">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Plate Letter"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ZPLATE_NUM"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateNum2">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Plate Letter"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ZPLATE_NUM"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateNum3">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Plate Letter"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ZPLATE_NUM"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/Status">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Request Status"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/QRValue">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType">
+                <Annotation Term="SAP__common.Label" String="Display the the remove popup"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/sticker">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>QRValue</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>QRValue</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/PayrollNum">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/AreaCode">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Access Area Code"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Area Code"/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/RequestId">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="ID Request Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/AreaDesc">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Area Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/Status">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Area App Status"/>
+                <Annotation Term="SAP__common.Heading" String="Area Approval Status"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ID Area Approval Status"/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/StatusDesc">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Character Field of Length 12"/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType">
+                <Annotation Term="SAP__common.Label" String="Existing Access Areas"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/areas">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.notificationType">
+                <Annotation Term="SAP__common.Label" String="Custom Entity for Notification"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/notification">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="Filterable" Bool="true"/>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Params"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SearchExpression"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>Params</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.authInfoType/USERID">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="User Name"/>
+                <Annotation Term="SAP__common.Heading" String="User"/>
+            </Annotations>
+            <Annotations Target="SAP__self.authInfoType">
+                <Annotation Term="SAP__common.Label" String="Admin Auth Check Custom Entity"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/authInfo">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/PayrollNum">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/RequestId">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="ID Request Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Pernr">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/IdNumber">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Personnel Number"/>
+                <Annotation Term="SAP__common.Heading" String="Pers.No."/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/userid">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Character Field of Length 12"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/CompanyCode">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Company Code"/>
+                <Annotation Term="SAP__common.Heading" String="CoCd"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Location">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Personnel area"/>
+                <Annotation Term="SAP__common.Heading" String="PA"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Personnel Area"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/EMail">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Long ID/Number"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication: Long Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Organization">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Organizational unit"/>
+                <Annotation Term="SAP__common.Heading" String="Org.unit"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Organizational Unit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/CsuiteOrg">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Object ID"/>
+                <Annotation Term="SAP__common.Heading" String="ObjectID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/DepartmentOrg">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="ID rel.object"/>
+                <Annotation Term="SAP__common.Heading" String="ID of related object"/>
+                <Annotation Term="SAP__common.QuickInfo" String="ID of Related Object"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/UserPosition">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/ArabicName">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Last name First name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Employee's Name (Sortable by LAST NAME FIRST NAME)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Nationality">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Nationality"/>
+                <Annotation Term="SAP__common.Heading" String="Nat"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/NationalID">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Iqama">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/GovernmentID">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/GovtId">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/BloodGroup">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Blood Group"/>
+                <Annotation Term="SAP__common.Heading" String="Blood Grp"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/BloodType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Blood Group"/>
+                <Annotation Term="SAP__common.Heading" String="Blood Grp"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/BadgeNumber">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/BadgeNum">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Identity Number"/>
+                <Annotation Term="SAP__common.Heading" String="ID Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/WorkPhone">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/HomePhone">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/BusinessMobile">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/CellPhone">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Phone">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/PhoneNum">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="System ID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Communication Identification/Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/JobTypeKey">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Employee subgroup"/>
+                <Annotation Term="SAP__common.Heading" String="ESgrp"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Employee Subgroup"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/PhotoMimeType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Photo Mime Type"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType">
+                <Annotation Term="SAP__common.Label" String="ID APP: Active ID Card of the user"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/activeIDandHR">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection/>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.Container">
+                <Annotation Term="SAP__aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="SAP__aggregation.RollupType/None"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                <Annotation Term="SAP__capabilities.FilterFunctions">
+                    <Collection>
+                        <String>eq</String>
+                        <String>ne</String>
+                        <String>gt</String>
+                        <String>ge</String>
+                        <String>lt</String>
+                        <String>le</String>
+                        <String>and</String>
+                        <String>or</String>
+                        <String>contains</String>
+                        <String>startswith</String>
+                        <String>endswith</String>
+                        <String>any</String>
+                        <String>all</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SupportedFormats">
+                    <Collection>
+                        <String>application/json</String>
+                        <String>application/pdf</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__PDF.Features">
+                    <Record>
+                        <PropertyValue Property="DocumentDescriptionReference" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="DocumentDescriptionCollection" String="MyDocumentDescriptions"/>
+                        <PropertyValue Property="ArchiveFormat" Bool="true"/>
+                        <PropertyValue Property="Border" Bool="true"/>
+                        <PropertyValue Property="CoverPage" Bool="true"/>
+                        <PropertyValue Property="FitToPage" Bool="true"/>
+                        <PropertyValue Property="FontName" Bool="true"/>
+                        <PropertyValue Property="FontSize" Bool="true"/>
+                        <PropertyValue Property="Margin" Bool="true"/>
+                        <PropertyValue Property="Padding" Bool="true"/>
+                        <PropertyValue Property="Signature" Bool="true"/>
+                        <PropertyValue Property="HeaderFooter" Bool="true"/>
+                        <PropertyValue Property="ResultSizeDefault" Int="20000"/>
+                        <PropertyValue Property="ResultSizeMaximum" Int="20000"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
+                <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
+            </Annotations>
+            <Annotations Target="SAP__self.configType/CreatedAt">
+                <Annotation Term="SAP__common.Label" String="Time Stamp"/>
+                <Annotation Term="SAP__common.QuickInfo" String="UTC Time Stamp in Long Form (YYYYMMDDhhmmssmmmuuun)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.configType/LastChangedAt">
+                <Annotation Term="SAP__common.Label" String="Time Stamp"/>
+                <Annotation Term="SAP__common.QuickInfo" String="UTC Time Stamp in Long Form (YYYYMMDDhhmmssmmmuuun)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/UserName">
+                <Annotation Term="SAP__common.Label" String="Employee/app.name"/>
+                <Annotation Term="SAP__common.Heading" String="Name of employee or applicant"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Formatted Name of Employee or Applicant"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/OrgText">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/DepartmentText">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/CSuiteName">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/PostionText">
+                <Annotation Term="SAP__common.Label" String="Position Short Text"/>
+                <Annotation Term="SAP__common.Heading" String="Short Text of Position"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text of Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/NationalityDesc">
+                <Annotation Term="SAP__common.Label" String="Country/Region Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/Gender">
+                <Annotation Term="SAP__common.Label" String="Gender"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Texts for Gender"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/ExpiryDate">
+                <Annotation Term="SAP__common.Label" String="Expiry Date"/>
+                <Annotation Term="SAP__common.Heading" String="ID Expiry Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/RenewEligible">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/LostEligible">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/AccessUpdateEligible">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/ReplaceDamagedEligible">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/EnableAdditionalJust">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRAuthInfoType/AllowStickerCreate">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/UserName">
+                <Annotation Term="SAP__common.Label" String="Employee/app.name"/>
+                <Annotation Term="SAP__common.Heading" String="Name of employee or applicant"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Formatted Name of Employee or Applicant"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/OrgText">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/DepartmentText">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/CSuiteName">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/PostionText">
+                <Annotation Term="SAP__common.Label" String="Position Short Text"/>
+                <Annotation Term="SAP__common.Heading" String="Short Text of Position"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text of Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/NationalityDesc">
+                <Annotation Term="SAP__common.Label" String="Country/Region Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/Gender">
+                <Annotation Term="SAP__common.Label" String="Gender"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Texts for Gender"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/ExpiryDate">
+                <Annotation Term="SAP__common.Label" String="Expiry Date"/>
+                <Annotation Term="SAP__common.Heading" String="ID Expiry Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.HRInfoType/PhotoContent">
+                <Annotation Term="SAP__common.Label" String="Photo Content"/>
+            </Annotations>
+            <Annotations Target="SAP__self.foryourattentionType/IsRead">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/ReqUuid">
+                <Annotation Term="SAP__common.Label" String="UUID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="16 Byte UUID in 16 Bytes (Raw Format)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/IssueDate">
+                <Annotation Term="SAP__common.Label" String="Issue Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/ExpiryDate">
+                <Annotation Term="SAP__common.Label" String="Expiry Date"/>
+                <Annotation Term="SAP__common.Heading" String="ID Expiry Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/name">
+                <Annotation Term="SAP__common.Label" String="Employee/app.name"/>
+                <Annotation Term="SAP__common.Heading" String="Name of employee or applicant"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Formatted Name of Employee or Applicant"/>
+            </Annotations>
+            <Annotations Target="SAP__self.idType/PhotoContent">
+                <Annotation Term="SAP__common.Label" String="Photo Content"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/StickerNumber">
+                <Annotation Term="SAP__common.Label" String="Sticker Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/ManufacturerDesc">
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/ColorDesc">
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateNum1Desc">
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateNum2Desc">
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/PlateNum3Desc">
+                <Annotation Term="SAP__common.Label" String="Short Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text for Fixed Values"/>
+            </Annotations>
+            <Annotations Target="SAP__self.stickerType/ExpireDate">
+                <Annotation Term="SAP__common.Label" String="Expire Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.areasType/ReqUuid">
+                <Annotation Term="SAP__common.Label" String="UUID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="16 Byte UUID in 16 Bytes (Raw Format)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.notificationType/IsRead">
+                <Annotation Term="SAP__common.Label" String="Truth Value"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Truth Value: True/False"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/ReqUuid">
+                <Annotation Term="SAP__common.Label" String="UUID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="16 Byte UUID in 16 Bytes (Raw Format)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/IssueDate">
+                <Annotation Term="SAP__common.Label" String="Issue Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/ExpiryDate">
+                <Annotation Term="SAP__common.Label" String="Expiry Date"/>
+                <Annotation Term="SAP__common.Heading" String="ID Expiry Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/name">
+                <Annotation Term="SAP__common.Label" String="Employee/app.name"/>
+                <Annotation Term="SAP__common.Heading" String="Name of employee or applicant"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Formatted Name of Employee or Applicant"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/UserName">
+                <Annotation Term="SAP__common.Label" String="Employee/app.name"/>
+                <Annotation Term="SAP__common.Heading" String="Name of employee or applicant"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Formatted Name of Employee or Applicant"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/OrgText">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/DepartmentText">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/CSuiteName">
+                <Annotation Term="SAP__common.Label" String="Object Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/PostionText">
+                <Annotation Term="SAP__common.Label" String="Position Short Text"/>
+                <Annotation Term="SAP__common.Heading" String="Short Text of Position"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text of Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/JobTitle">
+                <Annotation Term="SAP__common.Label" String="Position Short Text"/>
+                <Annotation Term="SAP__common.Heading" String="Short Text of Position"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text of Position"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/NationalityDesc">
+                <Annotation Term="SAP__common.Label" String="Country/Region Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/Gender">
+                <Annotation Term="SAP__common.Label" String="Gender"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Texts for Gender"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/GenderKey">
+                <Annotation Term="SAP__common.Label" String="Gender"/>
+            </Annotations>
+            <Annotations Target="SAP__self.activeIDandHRType/PhotoContent">
+                <Annotation Term="SAP__common.Label" String="Photo Content"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
