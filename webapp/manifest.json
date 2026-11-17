@@ -258,6 +258,7 @@
                       "subSections": {
                         "Ackfrag": {
                           "template": "com.jhah.zhrjhahsecid1.ext.fragment.Ackfrag",
+                          "visible": "{= ${HideAreaTab} !== false }",
                           "position": {
                             "placement": "After",
                             "anchor": "ReqSubSec"
