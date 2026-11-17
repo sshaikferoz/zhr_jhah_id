@@ -32,7 +32,7 @@ sap.ui.define(['sap/fe/test/ObjectPage', 'sap/ui/test/actions/Press'], function(
 
     return new ObjectPage(
         {
-            appId: 'com.jhah.zhrjhahsecid',
+            appId: 'com.jhah.zhrjhahsecid1',
             componentId: 'headerObjectPage',
             contextPath: '/header'
         },

@@ -38,7 +38,7 @@ sap.ui.define(
     var ID_APP_ID = "ID_APP";
 
     return ControllerExtension.extend(
-      "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt",
+      "com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt",
       {
         _oUiEditBinding: null,
         _iDraftStateRun: 0,
@@ -690,7 +690,7 @@ sap.ui.define(
 
             this._pSlotPopover = Fragment.load({
               id: sPopoverId,
-              name: "com.jhah.zhrjhahsecid.ext.fragment.TimeSlotPopover",
+              name: "com.jhah.zhrjhahsecid1.ext.fragment.TimeSlotPopover",
               controller: this,
             }).then(function (oPopover) {
               oPopover.addStyleClass("jhahAestheticPopover");
@@ -1153,7 +1153,7 @@ sap.ui.define(
             };
             this._pAreaDialog = Fragment.load({
               id: oView.getId(),
-              name: "com.jhah.zhrjhahsecid.ext.fragment.AreaSelectDialog",
+              name: "com.jhah.zhrjhahsecid1.ext.fragment.AreaSelectDialog",
               controller: oDialogController,
             }).then(function (oDialog) {
               oView.addDependent(oDialog);
@@ -3386,7 +3386,7 @@ sap.ui.define(
 
             oFragment = await sap.ui.core.Fragment.load({
               id: sUniqueId,
-              name: "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
+              name: "com.jhah.zhrjhahsecid1.ext.fragment.ActiveIdCard",
               controller: this,
             });
             this._log("ActiveID [7/7]: Fragment loaded successfully.");
@@ -3610,7 +3610,7 @@ sap.ui.define(
 
         //     oFragment = await sap.ui.core.Fragment.load({
         //       id: sUniqueId,
-        //       name: "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
+        //       name: "com.jhah.zhrjhahsecid1.ext.fragment.ActiveIdCard",
         //       controller: this,
         //     });
         //     this._log("ActiveID [7/7]: Fragment loaded successfully.");
@@ -3671,7 +3671,7 @@ sap.ui.define(
         //             oView.setModel(oActiveIdModel, "activeIDModel");
         //             this._updateRenewButtonState();
 
-        //             Fragment.load({ id: oView.getId(), name: "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard", controller: this }).then(function (oFragment) {
+        //             Fragment.load({ id: oView.getId(), name: "com.jhah.zhrjhahsecid1.ext.fragment.ActiveIdCard", controller: this }).then(function (oFragment) {
         //                 var oRoot = Array.isArray(oFragment) ? oFragment[0] : oFragment;
         //                 this._insertIdCardToPage(oRoot, oListReportPage);
         //                 resolve();
@@ -5272,13 +5272,13 @@ sap.ui.define(
 
             if (oFioriI18nModel && !oFioriI18nModel.__jhahCustomTextsApplied) {
               oFioriI18nModel.enhance({
-                bundleName: "com.jhah.zhrjhahsecid.i18n.i18n",
+                bundleName: "com.jhah.zhrjhahsecid1.i18n.i18n",
               });
 
               oFioriI18nModel.__jhahCustomTextsApplied = true;
 
               this._log("Fiori Elements texts enhanced.", {
-                bundleName: "com.jhah.zhrjhahsecid.i18n.i18n",
+                bundleName: "com.jhah.zhrjhahsecid1.i18n.i18n",
               });
             }
 

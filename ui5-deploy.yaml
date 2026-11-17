@@ -2,7 +2,7 @@
 
 specVersion: "4.0"
 metadata:
-  name: com.jhah.zhrjhahsecid
+  name: com.jhah.zhrjhahsecid1
 type: application
 builder:
   resources:
@@ -18,9 +18,9 @@ builder:
           url: http://jhah.virtual.ip.dhc:443
           client: '022'
         app:
-          name: ZHR_JHAHSEC_ID
-          package: ZHR_ID
-          transport: DHCK944868
+          name: ZHR_SEC_ID_1
+          package: ZHR_JHAHSEC_APPS_1
+          transport: DHCK944918
         exclude:
           - /test/
           - /localService/

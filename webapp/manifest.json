@@ -1,7 +1,7 @@
 {
   "_version": "1.60.0",
   "sap.app": {
-    "id": "com.jhah.zhrjhahsecid",
+    "id": "com.jhah.zhrjhahsecid1",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -70,7 +70,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.jhah.zhrjhahsecid.i18n.i18n"
+          "bundleName": "com.jhah.zhrjhahsecid1.i18n.i18n"
         }
       },
       "": {
@@ -171,17 +171,17 @@
                     "NavMaintainBlockedID": {
                       "text": "Maintain Blocked IDs",
                       "icon": "sap-icon://locked",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainBlockedID"
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.CustomActions.navigateToMaintainBlockedID"
                     },
                     "NavMaintainIDLocation": {
                       "text": "Maintain ID Location",
                       "icon": "sap-icon://map-2",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainIDLocation"
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.CustomActions.navigateToMaintainIDLocation"
                     },
                     "NavMaintainAccessArea": {
                       "text": "Maintain Access Areas",
                       "icon": "sap-icon://building",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainAccessArea"
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.CustomActions.navigateToMaintainAccessArea"
                     }
                   }
                 }
@@ -203,7 +203,7 @@
                   "facets": {
                     "CustomEmployeeHeader": {
                       "type": "XMLFragment",
-                      "name": "com.jhah.zhrjhahsecid.ext.fragment.EmployeeHeader"
+                      "name": "com.jhah.zhrjhahsecid1.ext.fragment.EmployeeHeader"
                     }
                   }
                 },
@@ -212,7 +212,8 @@
                     "GeneralTab": {
                       "subSections": {
                         "Ackfrag": {
-                          "template": "com.jhah.zhrjhahsecid.ext.fragment.Ackfrag",
+                          "template": "com.jhah.zhrjhahsecid1.ext.fragment.Ackfrag",
+                          "visible": "{= ${HideAreaTab} !== true }",
                           "position": {
                             "placement": "After",
                             "anchor": "ReqSubSec"
@@ -234,7 +235,7 @@
                   "actions": {
                     "ActionSelectAreas": {
                       "text": "Select Access Areas",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt.openAreaSelectionDialog",
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt.openAreaSelectionDialog",
                       "requiresSelection": false,
                       "visible": "{= ${ui>/editMode} === 'Editable' }"
                     }
@@ -249,11 +250,11 @@
     "extends": {
       "extensions": {
         "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid::headerList": {
-            "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
+          "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid1::headerList": {
+            "controllerName": "com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt"
           },
-          "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid::headerObjectPage": {
-            "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
+          "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid1::headerObjectPage": {
+            "controllerName": "com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt"
           }
         }
       }
