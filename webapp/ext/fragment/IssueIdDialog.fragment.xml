@@ -11,7 +11,7 @@
         title="{i18n>issueIdTitle}"
         contentWidth="32rem"
         busyIndicatorDelay="0"
-        core:require="{ formatter: 'com/jhah/zhrjhahsecid/ext/util/formatter' }">
+        core:require="{ formatter: 'com.jhah.zhrjhahsecid1/ext/util/formatter' }">
         <form:Form editable="true">
             <form:layout>
                 <form:ColumnLayout columnsM="1" columnsL="1" columnsXL="1"/>

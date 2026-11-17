@@ -1,7 +1,7 @@
 {
   "_version": "1.60.0",
   "sap.app": {
-    "id": "com.jhah.zhrjhahsecid",
+    "id": "com.jhah.zhrjhahsecid1",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -80,7 +80,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.jhah.zhrjhahsecid.i18n.i18n"
+          "bundleName": "com.jhah.zhrjhahsecid1.i18n.i18n"
         }
       },
       "": {
@@ -188,9 +188,9 @@
                   "actions": {
                     "IssueIdCard": {
                       "text": "{i18n>issueIdTitle}",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.IssueIdAction.onIssueIdFromList",
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.IssueIdAction.onIssueIdFromList",
                       "requiresSelection": true,
-                      "enabled": "com.jhah.zhrjhahsecid.ext.controller.IssueIdAction.isSingleSelection"
+                      "enabled": "com.jhah.zhrjhahsecid1.ext.controller.IssueIdAction.isSingleSelection"
                     },
                     "MaintainMasterData": {
                       "type": "Menu",
@@ -204,17 +204,17 @@
                     "NavMaintainBlockedID": {
                       "text": "{i18n>maintainBlockedIds}",
                       "icon": "sap-icon://locked",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainBlockedID"
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.CustomActions.navigateToMaintainBlockedID"
                     },
                     "NavMaintainIDLocation": {
                       "text": "{i18n>maintainIdLocation}",
                       "icon": "sap-icon://map-2",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainIDLocation"
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.CustomActions.navigateToMaintainIDLocation"
                     },
                     "NavMaintainAccessArea": {
                       "text": "{i18n>maintainAccessAreas}",
                       "icon": "sap-icon://building",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.CustomActions.navigateToMaintainAccessArea"
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.CustomActions.navigateToMaintainAccessArea"
                     }
                   }
                 }
@@ -237,7 +237,7 @@
                   "actions": {
                     "IssueIdCard": {
                       "text": "{i18n>issueIdTitle}",
-                      "press": "com.jhah.zhrjhahsecid.ext.controller.IssueIdAction.onIssueIdFromObjectPage",
+                      "press": "com.jhah.zhrjhahsecid1.ext.controller.IssueIdAction.onIssueIdFromObjectPage",
                       "visible": "{= ${__OperationControl/IssueID} === true && ${IsActiveEntity} === true }",
                       "position": {
                         "placement": "Before",
@@ -248,7 +248,7 @@
                   "facets": {
                     "CustomEmployeeHeader": {
                       "type": "XMLFragment",
-                      "name": "com.jhah.zhrjhahsecid.ext.fragment.EmployeeHeader"
+                      "name": "com.jhah.zhrjhahsecid1.ext.fragment.EmployeeHeader"
                     }
                   }
                 },
@@ -257,7 +257,7 @@
                     "GeneralTab": {
                       "subSections": {
                         "Ackfrag": {
-                          "template": "com.jhah.zhrjhahsecid.ext.fragment.Ackfrag",
+                          "template": "com.jhah.zhrjhahsecid1.ext.fragment.Ackfrag",
                           "position": {
                             "placement": "After",
                             "anchor": "ReqSubSec"
@@ -267,7 +267,7 @@
                       }
                     },
                     "ExistingAccessInfo": {
-                      "template": "com.jhah.zhrjhahsecid.ext.fragment.ExistingAccessInfo",
+                      "template": "com.jhah.zhrjhahsecid1.ext.fragment.ExistingAccessInfo",
                       "title": "{i18n>existingAccessTitle}",
                       "position": {
                         "placement": "Before",
@@ -287,7 +287,7 @@
                   "actions": {
                     "ActionSelectAreas": {
                       "text": "{i18n>selectAccessAreas}",
-                      "press": ".extension.com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt.openAreaSelectionDialog",
+                      "press": ".extension.com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt.openAreaSelectionDialog",
                       "requiresSelection": false,
                       "visible": "{ui>/isEditable}"
                     }
@@ -307,11 +307,11 @@
     "extends": {
       "extensions": {
         "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid::headerList": {
-            "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ListReportExt"
+          "sap.fe.templates.ListReport.ListReportController#com.jhah.zhrjhahsecid1::headerList": {
+            "controllerName": "com.jhah.zhrjhahsecid1.ext.controller.ListReportExt"
           },
-          "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid::headerObjectPage": {
-            "controllerName": "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt"
+          "sap.fe.templates.ObjectPage.ObjectPageController#com.jhah.zhrjhahsecid1::headerObjectPage": {
+            "controllerName": "com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt"
           }
         }
       }

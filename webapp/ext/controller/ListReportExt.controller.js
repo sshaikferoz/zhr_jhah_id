@@ -4,9 +4,9 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "sap/ui/model/json/JSONModel",
     "sap/base/Log",
-    "com/jhah/zhrjhahsecid/ext/util/UserRole",
-    "com/jhah/zhrjhahsecid/ext/util/IdConfig",
-    "com/jhah/zhrjhahsecid/ext/util/Constants"
+    "com.jhah.zhrjhahsecid1/ext/util/UserRole",
+    "com.jhah.zhrjhahsecid1/ext/util/IdConfig",
+    "com.jhah.zhrjhahsecid1/ext/util/Constants"
   ],
   function (ControllerExtension, Fragment, JSONModel, Log, UserRole, IdConfig, Constants) {
     "use strict";
@@ -23,7 +23,7 @@ sap.ui.define(
      * manifest.json, i18n/fe.properties and annotations/annotation.xml.
      */
     return ControllerExtension.extend(
-      "com.jhah.zhrjhahsecid.ext.controller.ListReportExt",
+      "com.jhah.zhrjhahsecid1.ext.controller.ListReportExt",
       {
         override: {
           onInit: function () {
@@ -208,7 +208,7 @@ sap.ui.define(
 
           Fragment.load({
             id: oView.getId(),
-            name: "com.jhah.zhrjhahsecid.ext.fragment.ActiveIdCard",
+            name: "com.jhah.zhrjhahsecid1.ext.fragment.ActiveIdCard",
             controller: this
           }).then(
             function (oCard) {

@@ -1,5 +1,5 @@
 sap.ui.define(
-  ["sap/m/MessageToast", "sap/base/Log", "com/jhah/zhrjhahsecid/ext/util/Constants"],
+  ["sap/m/MessageToast", "sap/base/Log", "com.jhah.zhrjhahsecid1/ext/util/Constants"],
   function (MessageToast, Log, Constants) {
     "use strict";
 

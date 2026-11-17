@@ -11,7 +11,7 @@
         visible="{= ${employeeInfo>/isVisible} === true &amp;&amp; ${IsMyRequest} === true }"
         width="100%"
         class="violatorHeaderWrapper sapUiMediumMarginBottom"
-        core:require="{ formatter: 'com/jhah/zhrjhahsecid/ext/util/formatter' }">
+        core:require="{ formatter: 'com.jhah.zhrjhahsecid1/ext/util/formatter' }">
         <HBox width="100%" class="nativeViolatorStrip" wrap="Wrap">
 
             <VBox class="violatorCol sapUiLargeMarginEnd sapUiSmallMarginBottom">

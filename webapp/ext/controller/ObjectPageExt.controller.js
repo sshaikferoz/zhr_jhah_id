@@ -7,8 +7,8 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/base/Log",
-    "com/jhah/zhrjhahsecid/ext/util/UserRole",
-    "com/jhah/zhrjhahsecid/ext/util/Constants"
+    "com.jhah.zhrjhahsecid1/ext/util/UserRole",
+    "com.jhah.zhrjhahsecid1/ext/util/Constants"
   ],
   function (
     ControllerExtension,
@@ -43,7 +43,7 @@ sap.ui.define(
      *  - "Select Access Areas" dialog (manifest custom action)
      */
     return ControllerExtension.extend(
-      "com.jhah.zhrjhahsecid.ext.controller.ObjectPageExt",
+      "com.jhah.zhrjhahsecid1.ext.controller.ObjectPageExt",
       {
         override: {
           onInit: function () {
@@ -357,7 +357,7 @@ sap.ui.define(
             var oView = this.base.getView();
             this._pAreaDialog = Fragment.load({
               id: oView.getId(),
-              name: "com.jhah.zhrjhahsecid.ext.fragment.AreaSelectDialog",
+              name: "com.jhah.zhrjhahsecid1.ext.fragment.AreaSelectDialog",
               controller: this
             }).then(function (oDialog) {
               oView.addDependent(oDialog);

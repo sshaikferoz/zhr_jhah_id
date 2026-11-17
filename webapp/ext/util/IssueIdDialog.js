@@ -6,7 +6,7 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/base/Log",
-    "com/jhah/zhrjhahsecid/ext/util/Constants"
+    "com.jhah.zhrjhahsecid1/ext/util/Constants"
   ],
   function (Fragment, JSONModel, Filter, FilterOperator, MessageToast, Log, Constants) {
     "use strict";
@@ -37,7 +37,7 @@ sap.ui.define(
     IssueIdDialog.prototype._getDialog = function () {
       if (!this._pDialog) {
         this._pDialog = Fragment.load({
-          name: "com.jhah.zhrjhahsecid.ext.fragment.IssueIdDialog",
+          name: "com.jhah.zhrjhahsecid1.ext.fragment.IssueIdDialog",
           controller: this
         }).then(
           function (oDialog) {

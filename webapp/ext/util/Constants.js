@@ -5,14 +5,14 @@ sap.ui.define([], function () {
    * Constants shared by the app's extension modules.
    *
    * Require it like any other module (no globals):
-   *   sap.ui.define(["com/jhah/zhrjhahsecid/ext/util/Constants"], function (Constants) { ... })
+   *   sap.ui.define(["com.jhah.zhrjhahsecid1/ext/util/Constants"], function (Constants) { ... })
    *
    * The object is frozen, so the values cannot be changed at runtime.
    * Model names and CSS classes must stay in sync with manifest.json, the XML fragments
    * and css/custom.css, which reference them by the same strings.
    */
 
-  const APP_ID = "com.jhah.zhrjhahsecid";
+  const APP_ID = "com.jhah.zhrjhahsecid1";
   const SERVICE_NAMESPACE = "com.sap.gateway.srvd.zsrv_hr_id_app.v0001";
 
   return Object.freeze({
