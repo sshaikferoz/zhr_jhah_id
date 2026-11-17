@@ -4,9 +4,9 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "sap/ui/model/json/JSONModel",
     "sap/base/Log",
-    "com.jhah.zhrjhahsecid1/ext/util/UserRole",
-    "com.jhah.zhrjhahsecid1/ext/util/IdConfig",
-    "com.jhah.zhrjhahsecid1/ext/util/Constants"
+    "com/jhah/zhrjhahsecid1/ext/util/UserRole",
+    "com/jhah/zhrjhahsecid1/ext/util/IdConfig",
+    "com/jhah/zhrjhahsecid1/ext/util/Constants"
   ],
   function (ControllerExtension, Fragment, JSONModel, Log, UserRole, IdConfig, Constants) {
     "use strict";

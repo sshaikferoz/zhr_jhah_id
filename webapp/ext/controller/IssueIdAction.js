@@ -1,8 +1,8 @@
 sap.ui.define(
   [
     "sap/m/MessageToast",
-    "com.jhah.zhrjhahsecid1/ext/util/IssueIdDialog",
-    "com.jhah.zhrjhahsecid1/ext/util/Constants"
+    "com/jhah/zhrjhahsecid1/ext/util/IssueIdDialog",
+    "com/jhah/zhrjhahsecid1/ext/util/Constants"
   ],
   function (MessageToast, IssueIdDialog, Constants) {
     "use strict";

@@ -7,8 +7,8 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/base/Log",
-    "com.jhah.zhrjhahsecid1/ext/util/UserRole",
-    "com.jhah.zhrjhahsecid1/ext/util/Constants"
+    "com/jhah/zhrjhahsecid1/ext/util/UserRole",
+    "com/jhah/zhrjhahsecid1/ext/util/Constants"
   ],
   function (
     ControllerExtension,

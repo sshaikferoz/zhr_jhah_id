@@ -1,4 +1,4 @@
-sap.ui.define(["com.jhah.zhrjhahsecid1/ext/util/Constants"], function (Constants) {
+sap.ui.define(["com/jhah/zhrjhahsecid1/ext/util/Constants"], function (Constants) {
   "use strict";
 
   /**

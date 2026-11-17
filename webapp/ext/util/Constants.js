@@ -5,7 +5,7 @@ sap.ui.define([], function () {
    * Constants shared by the app's extension modules.
    *
    * Require it like any other module (no globals):
-   *   sap.ui.define(["com.jhah.zhrjhahsecid1/ext/util/Constants"], function (Constants) { ... })
+   *   sap.ui.define(["com/jhah/zhrjhahsecid1/ext/util/Constants"], function (Constants) { ... })
    *
    * The object is frozen, so the values cannot be changed at runtime.
    * Model names and CSS classes must stay in sync with manifest.json, the XML fragments
